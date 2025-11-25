@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>You're in, {{ name }}! 🎅</h2>
+
+<p style="text-align:center; font-size:14px;">
+    Your Secret ID is:
+</p>
+
+<h3 style="text-align:center; font-size:24px; letter-spacing:3px;">
+    {{ secret_id }}
+</h3>
+
+<p style="text-align:center; font-size:13px; color:#e5e7eb;">
+    Save this somewhere safe. You can use it later on this website to see
+    your Christmas friend again after assignments are generated.
+</p>
+
+<div style="text-align:center; margin-top:16px;">
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to home</a>
+</div>
+{% endblock %}

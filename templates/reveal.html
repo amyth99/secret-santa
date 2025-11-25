@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Hi {{ name }} 🎄</h2>
+
+<p style="text-align:center; font-size:15px; margin-top:8px;">
+    Your Christmas friend is:
+</p>
+
+<h1 style="text-align:center; font-size:28px; margin:6px 0 16px;">
+    {{ receiver_name }}
+</h1>
+
+{% if receiver_note %}
+<div style="border-radius:12px; background:#020617; padding:12px 14px; font-size:13px;">
+    <strong>Their note / interests:</strong>
+    <p style="margin-top:6px; white-space:pre-wrap;">{{ receiver_note }}</p>
+</div>
+{% else %}
+<p style="font-size:13px; text-align:center;">
+    They didn’t leave a note, so you’ll have to guess 😈
+</p>
+{% endif %}
+
+<p style="font-size:11px; text-align:center; margin-top:16px; color:#9ca3af;">
+    Your Secret ID: {{ secret_id }}<br>
+    Don’t tell anyone who you got 👀
+</p>
+
+<div style="text-align:center; margin-top:18px;">
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to home</a>
+</div>
+{% endblock %}

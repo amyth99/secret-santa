@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin – Secret Santa</h2>
+
+<p style="font-size:13px; margin-bottom:10px;">
+    This page is for the organizer only. Make sure nobody else uses this.
+</p>
+
+<h3 style="font-size:15px;">Registered Participants</h3>
+
+<p style="font-size:12px;">
+    Total registered: {{ registered_names|length }}
+</p>
+
+{% if registered_names %}
+<ul style="font-size:13px;">
+    {% for name in registered_names %}
+        <li>{{ name }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p style="font-size:13px; color:#f97316;">
+    No one has registered yet.
+</p>
+{% endif %}
+
+<hr style="border-color:#4b5563; margin:16px 0;">
+
+<h3 style="font-size:15px;">Generate assignments</h3>
+
+{% if assignments_generated %}
+<p style="font-size:13px; color:#22c55e;">
+    Assignments have already been generated.
+</p>
+{% endif %}
+
+<form method="post" style="margin-top:8px;">
+    <div class="field">
+        <label for="admin_password">Admin password</label>
+        <input type="password" id="admin_password" name="admin_password" placeholder="••••••••">
+    </div>
+    <div style="text-align:center; margin-top:12px;">
+        <button type="submit" class="btn">Generate & send emails</button>
+    </div>
+</form>
+
+{% if assignments_generated %}
+<hr style="border-color:#4b5563; margin:16px 0;">
+<h3 style="font-size:15px;">Current assignments (for debugging)</h3>
+<ul style="font-size:13px;">
+    {% for giver, receiver in assignments.items() %}
+        <li>{{ giver }} → {{ receiver }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

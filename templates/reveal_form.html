@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Reveal your Christmas friend 🎁</h2>
+
+<p style="text-align:center; font-size:13px;">
+    Enter the Secret ID you received during registration or in the email.
+</p>
+
+<form method="post" style="max-width:360px; margin:16px auto 0;">
+    <div class="field">
+        <label for="secret_id">Secret ID</label>
+        <input type="text" id="secret_id" name="secret_id" placeholder="AB12-CD34">
+    </div>
+    <div style="text-align:center; margin-top:12px;">
+        <button type="submit" class="btn btn-secondary">Reveal 🎄</button>
+    </div>
+</form>
+{% endblock %}

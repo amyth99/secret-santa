@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>✨ Join Secret Santa</h2>
+
+<p style="font-size:13px; text-align:center; color:#e5e7eb;">
+    Enter your details. Use the same name everyone knows you by in the family.
+</p>
+
+<form method="post" style="margin-top:16px;">
+    <div class="field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" placeholder="Amith">
+    </div>
+
+    <div class="field">
+        <label for="email">Email address</label>
+        <input type="text" id="email" name="email" placeholder="you@example.com">
+    </div>
+
+    <div class="field">
+        <label for="note">Tell your Secret Santa about you (interests / jokes / hints)</label>
+        <textarea id="note" name="note" placeholder="I love coffee, books, cozy socks, and dark chocolate."></textarea>
+    </div>
+
+    <div style="text-align:center; margin-top:12px;">
+        <button type="submit" class="btn">Join 🎄</button>
+    </div>
+</form>
+{% endblock %}
