@@ -4,6 +4,12 @@ import secrets
 import string
 import smtplib
 import ssl
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+SENDGRID_FROM_EMAIL = os.environ.get("SENDGRID_FROM_EMAIL")
+
 
 from flask import Flask, render_template, request, redirect, url_for, flash, g
 
@@ -115,17 +121,29 @@ def generate_assignments(names):
 
 
 def send_email(to_email, subject, body):
-    """Send an email using Gmail SMTP."""
-    if not EMAIL_USER or not EMAIL_PASSWORD:
-        print("Email not configured (EMAIL_USER / EMAIL_PASSWORD missing), skipping send.")
+    if not SENDGRID_API_KEY or not SENDGRID_FROM_EMAIL:
+        print("SendGrid not configured. Skipping email.")
         return
 
-    msg = f"From: {EMAIL_FROM}\r\nTo: {to_email}\r\nSubject: {subject}\r\n\r\n{body}"
+    if not to_email:
+        print("No email provided. Skipping send.")
+        return
 
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login(EMAIL_USER, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_FROM, [to_email], msg.encode("utf-8"))
+    try:
+        message = Mail(
+            from_email=SENDGRID_FROM_EMAIL,
+            to_emails=to_email,
+            subject=subject,
+            plain_text_content=body,
+        )
+
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+
+        print("SendGrid status:", response.status_code)
+
+    except Exception as e:
+        print("SendGrid email failed:", e)
 
 
 def send_assignment_email(name, email, receiver_name, receiver_note, event_name, secret_id):
