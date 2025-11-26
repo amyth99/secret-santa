@@ -374,13 +374,10 @@ def admin():
 
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-        # Check if assignments already exist
-        cur.execute("SELECT COUNT(*) AS cnt FROM assignments;")
-        row = cur.fetchone()
-        if row["cnt"] > 0:
-            cur.close()
-            flash("Assignments already generated.", "info")
-            return redirect(url_for("admin"))
+        # Clear previous assignments so we can regenerate with all current participants
+        cur.execute("DELETE FROM assignments;")
+        conn.commit()
+
 
         # Get all registered participant names
         cur.execute("SELECT name FROM registrations;")
