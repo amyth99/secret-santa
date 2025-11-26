@@ -134,7 +134,7 @@ def send_email(to_email, subject, body):
             from_email=SENDGRID_FROM_EMAIL,
             to_emails=to_email,
             subject=subject,
-            plain_text_content=body,
+            html_content=body,
         )
 
         sg = SendGridAPIClient(SENDGRID_API_KEY)
@@ -148,38 +148,41 @@ def send_email(to_email, subject, body):
 
 def send_assignment_email(name, email, receiver_name, receiver_note, event_name, secret_id):
     if not email:
-       print(f"No email for {name}, skipping send.")
-       return
+        print(f"No email for {name}, skipping send.")
+        return
 
     subject = f"[{event_name}] Your Secret Santa Friend 🎄"
-    lines = [
-        f"Hi {name},",
-        "",
-        f"Your Secret Santa friend for {event_name} is: {receiver_name}",
-        "",
-    ]
+
+    html_body = f"""
+    <p>Hi {name},</p>
+
+    <p>Here’s your Secret Santa assignment for our family Christmas game.</p>
+
+    <p><strong>Your Christmas friend: {receiver_name}</strong></p>
+    """
+
     if receiver_note:
-        lines += [
-            "Here’s what they wrote about themselves:",
-            receiver_note,
-            "",
-        ]
-    lines += [
-        f"Your Secret ID (for the website reveal): {secret_id}",
-        "",
-        "Please keep this secret and have fun 🎅",
-    ]
-    body = "\n".join(lines)
+        html_body += f"""
+        <p>Their greetings / note:</p>
+        <blockquote>{receiver_note}</blockquote>
+        """
+
+    html_body += f"""
+    <p><strong>Your Secret ID</strong> (to view this again on the website): {secret_id}</p>
+
+    <p>If anything looks wrong, just ping me on WhatsApp.</p>
+
+    <p>– Amith</p>
+    """
 
     print("---- Email (SIMULATED SEND) ----")
     print(f"To: {email}")
     print("Subject:", subject)
-    print(body)
+    print(html_body)
     print("--------------------------------")
 
-    # Actual send
-    send_email(email, subject, body)
-
+    # Actual send (HTML)
+    send_email(email, subject, html_body)
 
 # ---------- Routes ----------
 
