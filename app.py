@@ -63,7 +63,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS registrations (
             id SERIAL PRIMARY KEY,
             name TEXT NOT NULL UNIQUE,
-            email TEXT NOT NULL,
+            email TEXT,
             note TEXT,
             secret_id TEXT NOT NULL UNIQUE
         );
@@ -147,6 +147,10 @@ def send_email(to_email, subject, body):
 
 
 def send_assignment_email(name, email, receiver_name, receiver_note, event_name, secret_id):
+    if not email:
+       print(f"No email for {name}, skipping send.")
+       return
+
     subject = f"[{event_name}] Your Secret Santa Friend 🎄"
     lines = [
         f"Hi {name},",
@@ -207,9 +211,10 @@ def register():
         note = request.form.get("note", "").strip()
 
         # Basic validation
-        if not name or not email:
-            flash("Name and email are required.", "error")
-            return redirect(url_for("register"))
+        if not name:
+          flash("Name is required.", "error")
+          return redirect(url_for("register"))
+
 
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
