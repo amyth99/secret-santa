@@ -9,23 +9,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* -------------------------
-           Colors
-        ------------------------- */
-        :root {
-            --accent-blue: #38bdf8;      /* Your existing blue highlight */
-            --accent-red: #ff4d4d;       /* Classic Christmas red */
-            --accent-white: #ffffff;     /* Candy-cane white */
+        /* ============================
+           Palette + base tokens
+           ============================ */
+        :root{
+            --accent-blue: #38bdf8;
+            --accent-red: #ff4d4d;
+            --accent-white: #ffffff;
             --card-bg: rgba(15,23,42,0.95);
+            --stripe-width: 12px; /* candy-cane stripe width (desktop) */
         }
 
-        /* -------------------------
-           Base Layout
-        ------------------------- */
+        /* ============================
+           Base layout
+           ============================ */
         body {
             margin: 0;
             padding: 0;
-            font-family: "Nunito", system-ui, sans-serif;
+            font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background: radial-gradient(circle at top, #1e293b 0, #020617 50%, #000 100%);
             color: #f9fafb;
         }
@@ -37,54 +38,15 @@
             border-radius: 18px;
             padding: 26px 28px 22px;
             box-shadow: 0 24px 60px rgba(0,0,0,0.55);
-            border: 1px solid rgba(148,163,184,0.18);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(148,163,184,0.18);
         }
 
-        h1, h2, h3 {
-            margin-top: 0;
-            text-align: center;
-        }
+        h1, h2, h3 { margin-top: 0; text-align: center; color: #f8fafc; }
+        a { color: var(--accent-blue); text-decoration: none; }
+        a:hover { color: var(--accent-red); }
 
-        /* -------------------------
-           Accent Underlines (Red + White Stripe)
-        ------------------------- */
-        .candy-underline {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 6px;
-        }
-
-        .candy-underline::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -2px;
-            width: 58px;
-            height: 4px;
-            border-radius: 4px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--accent-red) 0 8px,
-                var(--accent-white) 8px 16px
-            );
-            opacity: 0.9;
-        }
-
-        /* Links */
-        a {
-            color: var(--accent-blue);
-            text-decoration: none;
-        }
-        a:hover {
-            color: var(--accent-red);
-        }
-
-        /* -------------------------
-           Buttons
-        ------------------------- */
         .btn {
             display: inline-block;
             padding: 10px 18px;
@@ -94,32 +56,13 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 700;
-            transition: transform .1s, box-shadow .15s, filter .1s;
+            transition: transform .12s, box-shadow .12s, filter .12s;
+            box-shadow: 0 8px 18px rgba(2,6,23,0.45);
         }
+        .btn-primary { background: linear-gradient(135deg,#22c55e,#4ade80); color:#052e16; }
+        .btn-secondary { background: linear-gradient(135deg,var(--accent-blue),#22d3ee); color:#02131f; border-bottom:3px solid var(--accent-red); border-top:3px solid var(--accent-white); }
+        .btn:hover { transform: translateY(-1px) scale(1.01); filter: brightness(1.05); }
 
-        /* Primary (green) stays same */
-        .btn-primary {
-            background: linear-gradient(135deg, #22c55e, #4ade80);
-            color: #052e16;
-        }
-
-        /* Secondary (your blue) now gets red-white border accent */
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--accent-blue), #22d3ee);
-            color: #02131f;
-            border-bottom: 3px solid var(--accent-red);
-            border-top: 3px solid var(--accent-white);
-        }
-
-        .btn:hover {
-            transform: translateY(-1px) scale(1.01);
-            filter: brightness(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.35);
-        }
-
-        /* -------------------------
-           Inputs
-        ------------------------- */
         input[type="text"], input[type="password"], textarea {
             width: 100%;
             padding: 10px 12px;
@@ -130,97 +73,160 @@
             font-size: 14px;
             box-sizing: border-box;
         }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 6px var(--accent-red);
-        }
-
         textarea { resize: vertical; min-height: 80px; }
-
         label { font-size: 14px; color: #dbeafe; }
         .field { margin-bottom: 14px; }
 
-        /* -------------------------
-           Flash messages
-        ------------------------- */
-        .flash {
-            padding: 8px 10px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 13px;
-        }
+        .flash { padding: 8px 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; }
         .flash.error { background: #fee2e2; color: #7f1d1d; }
         .flash.success { background: #dcfce7; color: #14532d; }
         .flash.info { background: #e0f2fe; color: #0c4a6e; }
 
-        /* -------------------------
-           Music Button
-        ------------------------- */
-        .music-control {
+        .music-control { position: absolute; top: 16px; right: 16px; z-index: 1200; } /* keep above decorations */
+
+        .footer { margin-top: 18px; font-size: 11px; text-align: center; color: #9ca3af; }
+
+        /* ============================
+           Recommended config:
+           - thin candy-cane stripe on left inside .container
+           - two corner SVG snowflakes (subtle)
+           ============================ */
+
+        /* stripe container (inside .container) */
+        .left-candy-stripe {
             position: absolute;
-            top: 16px;
-            right: 16px;
-            z-index: 200;
+            top: 8px;
+            bottom: 8px;
+            left: 8px;
+            width: var(--stripe-width);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 60; /* below interactive controls but above background */
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35) inset;
+            background: repeating-linear-gradient(
+                135deg,
+                var(--accent-red) 0 calc(var(--stripe-width) / 2),
+                var(--accent-white) calc(var(--stripe-width) / 2) var(--stripe-width)
+            );
+            opacity: 0.95;
         }
 
-        /* -------------------------
-           Snow (kept same)
-        ------------------------- */
-        .snow {
+        /* shrink stripe on small screens so it doesn't steal space */
+        @media (max-width: 640px) {
+            :root { --stripe-width: 8px; }
+            .left-candy-stripe { left: 10px; top: 6px; bottom: 6px; border-radius: 6px; }
+        }
+
+        /* corner snowflake basics */
+        .corner-snowflake {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall 10s linear infinite;
+            width: 44px;
+            height: 44px;
+            pointer-events: none;
+            z-index: 70; /* above stripe but below music-control */
+            opacity: 0.95;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.55));
         }
-        .snow:nth-child(1) { left: 10%; animation-duration: 8s; }
-        .snow:nth-child(2) { left: 30%; animation-duration: 9s; animation-delay: 2s; }
-        .snow:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 4s; }
-        .snow:nth-child(4) { left: 70%; animation-duration: 11s; animation-delay: 1s; }
-        .snow:nth-child(5) { left: 90%; animation-duration: 10s; animation-delay: 3s; }
+        .corner-snowflake svg { width: 100%; height: 100%; display:block; }
 
-        @keyframes fall {
-            0% { transform: translateY(-10px); opacity: 0 }
-            10% { opacity: 0.95 }
-            100% { transform: translateY(500px); opacity: 0 }
+        .corner-snowflake.top-left  { top: 10px; left: 34px; } /* offset right so stripe not covered */
+        .corner-snowflake.top-right { top: 10px; right: 18px; }
+
+        /* subtle pulse for snowflake glow (soft, non-distracting) */
+        @keyframes snow-pulse {
+            0%   { opacity: 0.88; transform: scale(1); filter: blur(0px); }
+            50%  { opacity: 1;    transform: scale(1.03); filter: blur(0.6px); }
+            100% { opacity: 0.88; transform: scale(1); filter: blur(0px); }
         }
 
-        .footer {
-            margin-top: 18px;
-            font-size: 11px;
-            text-align: center;
-            color: #9ca3af;
+        .corner-snowflake .flake-shine {
+            opacity: 0.9;
+            transform-origin: center;
+            animation: snow-pulse 2600ms ease-in-out infinite;
         }
+
+        /* Respect user motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .corner-snowflake .flake-shine { animation: none; }
+        }
+
+        /* smaller on very small screens */
+        @media (max-width: 420px) {
+            .corner-snowflake { width: 34px; height: 34px; top: 8px; }
+            .corner-snowflake.top-left { left: 28px; }
+            .corner-snowflake.top-right { right: 8px; }
+        }
+
+        /* ensure stripe/snow don't overlap primary content text (give inner padding) */
+        .container .content-pad-left {
+            padding-left: calc(var(--stripe-width) + 20px);
+        }
+
     </style>
 </head>
-
 <body>
 <div class="container">
 
-    <!-- Snow -->
+    <!-- thin candy-cane vertical stripe inside the card -->
+    <div class="left-candy-stripe" aria-hidden="true"></div>
+
+    <!-- top-left subtle snowflake (SVG) -->
+    <div class="corner-snowflake top-left" aria-hidden="true">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <!-- simple geometric snowflake with a soft shine circle -->
+            <g fill="none" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <g transform="translate(32,32)">
+                    <line x1="0" y1="-16" x2="0" y2="16" />
+                    <line x1="-16" y1="0" x2="16" y2="0" />
+                    <line x1="-11.3" y1="-11.3" x2="11.3" y2="11.3" />
+                    <line x1="-11.3" y1="11.3" x2="11.3" y2="-11.3" />
+                    <circle cx="0" cy="0" r="4.6" fill="rgba(255,255,255,0.04)" />
+                </g>
+            </g>
+            <circle class="flake-shine" cx="32" cy="32" r="14" fill="rgba(255,255,255,0.06)"></circle>
+        </svg>
+    </div>
+
+    <!-- top-right subtle snowflake (SVG) -->
+    <div class="corner-snowflake top-right" aria-hidden="true">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <g fill="none" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <g transform="translate(32,32)">
+                    <line x1="0" y1="-16" x2="0" y2="16" />
+                    <line x1="-16" y1="0" x2="16" y2="0" />
+                    <line x1="-11.3" y1="-11.3" x2="11.3" y2="11.3" />
+                    <line x1="-11.3" y1="11.3" x2="11.3" y2="-11.3" />
+                    <rect x="-2.4" y="-2.4" width="4.8" height="4.8" rx="1.2" fill="rgba(255,255,255,0.02)" />
+                </g>
+            </g>
+            <circle class="flake-shine" cx="32" cy="32" r="12.8" fill="rgba(255,255,255,0.05)"></circle>
+        </svg>
+    </div>
+
+    <!-- Snow dots (decorative background) -->
     <div class="snow"></div>
     <div class="snow"></div>
     <div class="snow"></div>
     <div class="snow"></div>
     <div class="snow"></div>
 
+    <!-- music control kept above decorations -->
     <div class="music-control">
         <button class="btn btn-secondary" type="button" onclick="toggleMusic()">🎵 Music</button>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
+      {% if messages %}
         {% for category, msg in messages %}
-        <div class="flash {{ category }}">{{ msg }}</div>
+          <div class="flash {{ category }}">{{ msg }}</div>
         {% endfor %}
-    {% endif %}
+      {% endif %}
     {% endwith %}
 
-    {% block content %}{% endblock %}
+    <!-- add content-pad-left to main content wrapper where appropriate so text doesn't run into stripe -->
+    <div class="content-pad-left">
+      {% block content %}{% endblock %}
+    </div>
 
     <div class="footer">Built with ❤️ for family Secret Santa</div>
 </div>
@@ -231,10 +237,10 @@
     const audioEl = document.getElementById("bg-music");
     let musicPlaying = false;
     function toggleMusic() {
+        if (!audioEl) return;
         if (musicPlaying) { audioEl.pause(); musicPlaying = false; }
         else { audioEl.play().catch(()=>{}); musicPlaying = true; }
     }
 </script>
-
 </body>
 </html>
