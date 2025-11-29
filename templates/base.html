@@ -258,11 +258,13 @@
 
     {% block content %}{% endblock %}
 
-    <div class="footer">Built with ❤️ for family Secret Santa</div>
+    <div class="footer">⛄⛄⛄</div>
 </div>
 
 <!-- audio -->
-<audio id="bg-music" loop></audio>
+<audio id="bg-music" loop>
+    <source src="{{url_for('static', filename='music\Hiroaki TsuTsumi - Silent Night.mp3') }}" type="audio/mpeg">
+</audio>
 
 <script>
     const audioEl = document.getElementById("bg-music");
