@@ -52,41 +52,50 @@
             transition: transform .12s, box-shadow .12s, filter .12s;
         }
 
-        /* Primary CTA: green but with a small red accent glow */
+        /* Primary CTA: green with a subtle warm red accent glow */
         .btn-primary {
             background: linear-gradient(135deg,#22c55e,#4ade80);
             color:#052e16;
-            box-shadow: 0 6px 18px rgba(34,197,94,0.28), 0 0 8px rgba(255,77,77,0.06);
+            box-shadow:
+                0 6px 16px rgba(34,197,94,0.22),
+                0 0 8px rgba(255,77,77,0.05); /* subtle red hint */
             border: 1px solid rgba(0,0,0,0.06);
         }
         .btn-primary:hover {
             transform: translateY(-1px) scale(1.03);
-            box-shadow: 0 8px 26px rgba(34,197,94,0.38), 0 0 12px rgba(255,77,77,0.09);
+            box-shadow:
+                0 10px 28px rgba(34,197,94,0.30),
+                0 0 12px rgba(255,77,77,0.08);
         }
 
-        /* Secondary (blue) — subtle red & white trim on top/bottom */
+        /* Secondary (blue) — subtle white top / red bottom trim */
         .btn-secondary {
             background: linear-gradient(135deg,var(--accent-blue),#22d3ee);
             color:#02131f;
             padding-top:9px;
             padding-bottom:9px;
             position:relative;
+            overflow: visible;
         }
         .btn-secondary::before,
         .btn-secondary::after {
             content: "";
             position: absolute;
-            left: 6px;
-            right: 6px;
+            left: 8px;
+            right: 8px;
             height: 3px;
             border-radius: 3px;
             pointer-events: none;
+            opacity: 0.92;
         }
-        /* white top stripe, red bottom stripe */
-        .btn-secondary::before { top: -4px; background: var(--accent-white); opacity:0.95; }
-        .btn-secondary::after  { bottom: -4px; background: var(--accent-red); opacity:0.95; }
+        /* thin white top stripe, thin red bottom stripe — subtle and classy */
+        .btn-secondary::before { top: -5px; background: var(--accent-white); height: 2px; opacity: 0.95; }
+        .btn-secondary::after  { bottom: -5px; background: var(--accent-red); height: 2px; opacity: 0.95; }
 
-        .btn-secondary:hover { transform: translateY(-1px) scale(1.01); filter: brightness(1.02); }
+        .btn-secondary:hover {
+            transform: translateY(-1px) scale(1.01);
+            filter: brightness(1.02);
+        }
 
         /* ---------- Inputs / forms ---------- */
         input[type="text"], input[type="password"], textarea {
@@ -138,7 +147,6 @@
 
         .footer { margin-top:18px; font-size:11px; text-align:center; color:#9ca3af; }
 
-        /* small responsive tweaks */
         @media (max-width:640px) {
             .container { margin:20px; padding:20px; }
             .string-lights-svg { max-width:640px; }
@@ -152,7 +160,7 @@
     <div class="string-lights-wrap" aria-hidden="true">
         <svg class="string-lights-svg" viewBox="0 0 760 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
             <path d="M20,36 C120,18 200,18 300,36 C400,54 520,54 640,36 C720,24 740,24 740,24" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3" stroke-linecap="round" />
-            <!-- bulbs (grouped) -->
+            <!-- bulbs -->
             <g transform="translate(40,36)">
                 <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
                 <circle cx="0" cy="6" r="8" fill="#ff6b78" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
