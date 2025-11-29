@@ -9,19 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* -------------------------
-           Colors
-        ------------------------- */
         :root {
-            --accent-blue: #38bdf8;      /* Your existing blue highlight */
-            --accent-red: #ff4d4d;       /* Classic Christmas red */
-            --accent-white: #ffffff;     /* Candy-cane white */
+            --accent-blue: #38bdf8;
+            --accent-red: #ff4d4d;
+            --accent-white: #ffffff;
             --card-bg: rgba(15,23,42,0.95);
         }
 
-        /* -------------------------
-           Base Layout
-        ------------------------- */
         body {
             margin: 0;
             padding: 0;
@@ -42,49 +36,12 @@
             overflow: hidden;
         }
 
-        h1, h2, h3 {
-            margin-top: 0;
-            text-align: center;
-        }
+        h1, h2, h3 { margin-top: 0; text-align: center; }
 
-        /* -------------------------
-           Accent Underlines (Red + White Stripe)
-        ------------------------- */
-        .candy-underline {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 6px;
-        }
+        a { color: var(--accent-blue); }
+        a:hover { color: var(--accent-red); }
 
-        .candy-underline::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -2px;
-            width: 58px;
-            height: 4px;
-            border-radius: 4px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--accent-red) 0 8px,
-                var(--accent-white) 8px 16px
-            );
-            opacity: 0.9;
-        }
-
-        /* Links */
-        a {
-            color: var(--accent-blue);
-            text-decoration: none;
-        }
-        a:hover {
-            color: var(--accent-red);
-        }
-
-        /* -------------------------
-           Buttons
-        ------------------------- */
+        /* Buttons */
         .btn {
             display: inline-block;
             padding: 10px 18px;
@@ -94,32 +51,26 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 700;
-            transition: transform .1s, box-shadow .15s, filter .1s;
+            transition: transform 0.1s, box-shadow 0.15s, filter 0.1s;
         }
 
-        /* Primary (green) stays same */
+        /* CTA button (JOIN) */
         .btn-primary {
             background: linear-gradient(135deg, #22c55e, #4ade80);
             color: #052e16;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px) scale(1.03);
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.6);
         }
 
-        /* Secondary (your blue) now gets red-white border accent */
+        /* Secondary button */
         .btn-secondary {
             background: linear-gradient(135deg, var(--accent-blue), #22d3ee);
             color: #02131f;
-            border-bottom: 3px solid var(--accent-red);
-            border-top: 3px solid var(--accent-white);
         }
 
-        .btn:hover {
-            transform: translateY(-1px) scale(1.01);
-            filter: brightness(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.35);
-        }
-
-        /* -------------------------
-           Inputs
-        ------------------------- */
         input[type="text"], input[type="password"], textarea {
             width: 100%;
             padding: 10px 12px;
@@ -131,20 +82,11 @@
             box-sizing: border-box;
         }
 
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 6px var(--accent-red);
-        }
-
         textarea { resize: vertical; min-height: 80px; }
 
         label { font-size: 14px; color: #dbeafe; }
         .field { margin-bottom: 14px; }
 
-        /* -------------------------
-           Flash messages
-        ------------------------- */
         .flash {
             padding: 8px 10px;
             border-radius: 8px;
@@ -155,9 +97,6 @@
         .flash.success { background: #dcfce7; color: #14532d; }
         .flash.info { background: #e0f2fe; color: #0c4a6e; }
 
-        /* -------------------------
-           Music Button
-        ------------------------- */
         .music-control {
             position: absolute;
             top: 16px;
@@ -165,9 +104,7 @@
             z-index: 200;
         }
 
-        /* -------------------------
-           Snow (kept same)
-        ------------------------- */
+        /* Snow */
         .snow {
             position: absolute;
             width: 4px;

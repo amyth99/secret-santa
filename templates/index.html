@@ -1,43 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>🎄 Mom-side Secret Santa 2025 🎁</h1>
 
-<p style="text-align:center; font-size:14px; color:#e5e7eb;">
-    Welcome to our little online Secret Santa. Register once, get your Christmas friend
+<h1 class="candy-underline">Secret Santa 2025 🎄</h1>
+
+<p style="text-align:center; margin-top:10px;">
+    Welcome to our family Secret Santa!  
+    Register once, get your Christmas friend
     by email when the organizer triggers it, and you can come back here with your
     Secret ID to see the reveal again.
 </p>
 
-<div style="display:flex; flex-direction:column; gap:16px; margin-top:24px;">
-    <div style="text-align:center;">
-        <a href="{{ url_for('register') }}" class="btn">
-            ✨ Join Secret Santa
-        </a>
-    </div>
-
-    <div style="border-top:1px solid #4b5563; padding-top:16px; margin-top:8px;">
-        <h3 style="text-align:center; font-size:16px;">Already joined?</h3>
-        <p style="font-size:13px; text-align:center;">
-            Enter your Secret ID to see your Christmas friend (after assignments are generated).
-        </p>
-        <form method="post" action="{{ url_for('reveal') }}" style="max-width:360px; margin:0 auto;">
-            <div class="field">
-                <label for="secret_id">Secret ID</label>
-                <input type="text" id="secret_id" name="secret_id" placeholder="AB12-CD34">
-            </div>
-            <div style="text-align:center;">
-                <button type="submit" class="btn btn-secondary">Reveal 🎁</button>
-            </div>
-        </form>
-        {% if not assignments_generated %}
-        <p style="font-size:11px; text-align:center; margin-top:8px; color:#9ca3af;">
-            (Reveal will only work after the organizer generates assignments.)
-        </p>
-        {% endif %}
-    </div>
-
-    <div style="text-align:center; margin-top:10px;">
-        <a href="{{ url_for('admin') }}" style="font-size:11px; opacity:0.7;">Admin</a>
-    </div>
+<div style="text-align:center; margin-top:24px;">
+    <a href="{{ url_for('register') }}" class="btn btn-primary">Join 🎁</a>
 </div>
+
+{% if assignments_generated %}
+<p style="text-align:center; margin-top:20px;">
+    <a href="{{ url_for('reveal') }}" class="btn btn-secondary">Reveal My Friend 🎄</a>
+</p>
+{% endif %}
+
 {% endblock %}
