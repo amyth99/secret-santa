@@ -255,9 +255,27 @@
         /* hanging + gentle sway */
         .string-lights .bulb {
             animation: hang-sway 5.5s ease-in-out infinite;
+            /* fallback duration */
+            animation-duration: 5.6s;
         }
         .string-lights .bulb:nth-child(odd) { animation-duration: 5.2s; }
         .string-lights .bulb:nth-child(even) { animation-duration: 5.8s; }
+
+        /* small smooth phase offsets so bulbs don't sway exactly together */
+        .string-lights .bulb:nth-child(1)  { animation-delay: 0s; }
+        .string-lights .bulb:nth-child(2)  { animation-delay: 0.12s; }
+        .string-lights .bulb:nth-child(3)  { animation-delay: 0.24s; }
+        .string-lights .bulb:nth-child(4)  { animation-delay: 0.36s; }
+        .string-lights .bulb:nth-child(5)  { animation-delay: 0.48s; }
+        .string-lights .bulb:nth-child(6)  { animation-delay: 0.60s; }
+        .string-lights .bulb:nth-child(7)  { animation-delay: 0.08s; }
+        .string-lights .bulb:nth-child(8)  { animation-delay: 0.20s; }
+        .string-lights .bulb:nth-child(9)  { animation-delay: 0.32s; }
+        .string-lights .bulb:nth-child(10) { animation-delay: 0.44s; }
+        .string-lights .bulb:nth-child(11) { animation-delay: 0.56s; }
+        .string-lights .bulb:nth-child(12) { animation-delay: 0.16s; }
+        .string-lights .bulb:nth-child(13) { animation-delay: 0.28s; }
+        .string-lights .bulb:nth-child(14) { animation-delay: 0.40s; }
 
         @keyframes hang-sway {
             0%   { transform: translateY(6px) rotate(-3deg); }
@@ -365,7 +383,7 @@
 
 <script>
 /* Twinkle / soft glow logic for string lights */
-/* JS now also toggles a .lit class on the bulb so the bulb surface visibly 'lights up' */
+/* JS now only controls glow and .lit class — it no longer writes transforms */
 (function() {
     try {
         const bulbs = document.querySelectorAll(".string-lights .bulb");
@@ -406,9 +424,9 @@
                 }, delay + i * 80);
             }
 
-            // slight hanging variation per bulb
-            const extraHang = (i % 3) * 2;
-            b.style.transform = `translateY(${6 + extraHang}px) rotate(${i % 2 ? -2 : 2}deg)`;
+            // don't set transform here; CSS handles sway and we use animation-delay via CSS nth-child
+            // small inline stagger (optional) — keeps JS lightweight and avoids transform conflicts
+            b.style.animationDelay = `${(i % 6) * 0.12}s`;
 
             setTimeout(schedule, 300 + i * 60);
         });
