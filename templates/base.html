@@ -12,7 +12,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: "Nunito", system-ui, sans-serif;
             background: radial-gradient(circle at top, #1e293b 0, #020617 50%, #000 100%);
             color: #f9fafb;
         }
@@ -26,10 +26,10 @@
             box-shadow: 0 24px 60px rgba(0,0,0,0.55);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(148, 163, 184, 0.18);
+            border: 1px solid rgba(148,163,184,0.18);
         }
 
-        h1, h2, h3 { margin-top: 0; text-align: center; }
+        h1, h2, h3 { text-align: center; margin-top: 0; }
         a { color: #a5b4fc; }
 
         .btn {
@@ -42,7 +42,6 @@
             font-weight: 700;
             cursor: pointer;
             text-decoration: none;
-            text-align: center;
             font-size: 14px;
             transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
         }
@@ -50,207 +49,151 @@
         .btn:hover { transform: translateY(-1px) scale(1.01); box-shadow: 0 10px 20px rgba(0,0,0,0.35); filter: brightness(1.03); }
 
         input[type="text"], input[type="password"], textarea {
-            width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #4b5563;
-            background: #020617; color: #e5e7eb; box-sizing: border-box; font-size: 14px;
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #4b5563;
+            background: #020617;
+            color: #e5e7eb;
+            font-size: 14px;
+            box-sizing: border-box;
         }
         textarea { resize: vertical; min-height: 80px; }
-        label { font-size: 14px; }
+
         .field { margin-bottom: 14px; }
+        label { font-size: 14px; }
 
         .flash { padding: 8px 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; }
         .flash.error { background: #fee2e2; color: #7f1d1d; }
         .flash.success { background: #dcfce7; color: #14532d; }
         .flash.info { background: #e0f2fe; color: #0c4a6e; }
 
-        .music-control { position: absolute; top: 16px; right: 16px; font-size: 12px; z-index: 120; }
+        .music-control { position: absolute; top: 16px; right: 16px; z-index: 120; }
 
-        /* Simple floating snow dots */
+        /* Snow */
         .snow { position: absolute; width: 4px; height: 4px; background: white; border-radius: 50%; opacity: 0.8; animation: fall 10s linear infinite; }
-        .snow:nth-child(1) { left: 10%; animation-duration: 8s; animation-delay: 0s; }
+        .snow:nth-child(1) { left: 10%; animation-duration: 8s; }
         .snow:nth-child(2) { left: 30%; animation-duration: 9s; animation-delay: 2s; }
         .snow:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 4s; }
         .snow:nth-child(4) { left: 70%; animation-duration: 11s; animation-delay: 1s; }
         .snow:nth-child(5) { left: 90%; animation-duration: 10s; animation-delay: 3s; }
-        @keyframes fall { 0% { transform: translateY(-10px); opacity: 0; } 10% { opacity: 0.9; } 100% { transform: translateY(500px); opacity: 0; } }
+        @keyframes fall { 0%{transform:translateY(-10px);opacity:0;}10%{opacity:.9;}100%{transform:translateY(500px);opacity:0;} }
 
-        .footer { margin-top: 18px; font-size: 11px; text-align: center; color: #9ca3af; }
+        .footer { margin-top: 18px; text-align:center; font-size:11px; color:#9ca3af; }
 
-        /* ---------- String lights: static hanging, glow only ---------- */
+        /* String lights (static, no movement) */
         .string-lights {
             position: absolute;
             top: -8px;
-            left: 0;
-            right: 0;
-            height: 96px;
+            left: 0; right: 0;
+            height: 90px;
             pointer-events: none;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
             z-index: 50;
-            overflow: visible;
-            padding-top: 6px;
         }
 
         .string-lights::before {
-            content: "";
-            position: absolute;
-            top: 28px;
-            left: 6%;
-            right: 6%;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-            border-radius: 2px;
-            z-index: 52;
+            content:"";
+            position:absolute;
+            top:28px;
+            left:6%; right:6%;
+            height:2px;
+            background:rgba(255,255,255,0.08);
         }
 
-        /* bulb container (static - no transforms on the bulb element) */
         .string-lights .bulb {
             --size: 10px;
-            width: calc(var(--size) * 1.4);
-            height: calc(var(--size) * 1.9);
+            width: calc(var(--size)*1.5);
+            height: calc(var(--size)*1.8);
             margin: 0 8px;
             position: relative;
-            z-index: 55;
-            display: flex;
-            align-items: flex-start;
-            /* removed transform-origin and any transition on transform to avoid jitter */
+            transform-origin: 50% 0;
+            /* STATIC — no animation */
         }
 
+        /* Holder */
         .string-lights .bulb::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 8px;
-            border-radius: 3px;
-            background: rgba(16,16,16,0.75);
-            z-index: 60;
+            content:"";
+            position:absolute;
+            top:0; left:50%; transform:translateX(-50%);
+            width:5px; height:8px;
+            background:rgba(16,16,16,0.8);
+            border-radius:3px;
         }
 
+        /* Glass bulb */
         .string-lights .bulb::after {
-            content: "";
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(var(--size) * 2.2);
-            height: calc(var(--size) * 2.2);
-            border-radius: 50% 50% 45% 45%;
+            content:"";
+            position:absolute;
+            top:8px; left:50%; transform:translateX(-50%);
+            width: calc(var(--size)*2.2);
+            height: calc(var(--size)*2.2);
+            border-radius:50% 50% 45% 45%;
             background: rgba(255,255,255,0.08);
             box-shadow: inset -4px -6px 12px rgba(0,0,0,0.6);
-            z-index: 70;
-            transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
-            will-change: transform, box-shadow, filter;
-            pointer-events: none;
+            z-index: 5;
+            transition: filter 200ms ease, transform 200ms ease;
         }
 
-        /* color of bulb surface (static) */
-        .string-lights .bulb[data-color="red"]::after   { background: linear-gradient(180deg,#ff6b78,#b40a1a); }
-        .string-lights .bulb[data-color="green"]::after { background: linear-gradient(180deg,#8ef48a,#0b662f); }
-        .string-lights .bulb[data-color="gold"]::after  { background: linear-gradient(180deg,#ffe08a,#c38f0b); }
-        .string-lights .bulb[data-color="cyan"]::after  { background: linear-gradient(180deg,#8ef0ff,#0aa0a8); }
-        .string-lights .bulb[data-color="pink"]::after  { background: linear-gradient(180deg,#ffb3e2,#c1007a); }
+        /* Colors */
+        .bulb[data-color="red"]::after   { background: linear-gradient(180deg,#ff6b78,#b40a1a); }
+        .bulb[data-color="green"]::after { background: linear-gradient(180deg,#8ef48a,#0b662f); }
+        .bulb[data-color="gold"]::after  { background: linear-gradient(180deg,#ffe08a,#c38f0b); }
+        .bulb[data-color="cyan"]::after  { background: linear-gradient(180deg,#8ef0ff,#0aa0a8); }
+        .bulb[data-color="pink"]::after  { background: linear-gradient(180deg,#ffb3e2,#c1007a); }
 
-        /* glow element above the bulb surface */
-        .string-lights .bulb .glow {
-            position: absolute;
-            top: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            z-index: 200;
-            opacity: 0;
-            filter: blur(18px);
-            pointer-events: none;
-            mix-blend-mode: screen;
-            transition: opacity 120ms linear;
+        /* Glow layer */
+        .bulb .glow {
+            position:absolute;
+            top:12px; left:50%; transform:translateX(-50%);
+            width:80px; height:80px;
+            border-radius:50%;
+            opacity:0;
+            filter:blur(18px);
+            mix-blend-mode:screen;
+            pointer-events:none;
+            z-index: 10;
         }
 
-        .string-lights .bulb[data-color="red"] .glow   { background: rgba(255,90,110,0.28); }
-        .string-lights .bulb[data-color="green"] .glow { background: rgba(110,230,140,0.26); }
-        .string-lights .bulb[data-color="gold"] .glow  { background: rgba(255,215,110,0.26); }
-        .string-lights .bulb[data-color="cyan"] .glow  { background: rgba(110,230,240,0.26); }
-        .string-lights .bulb[data-color="pink"] .glow  { background: rgba(255,160,200,0.26); }
+        .bulb[data-color="red"] .glow   { background:rgba(255,90,110,0.28); }
+        .bulb[data-color="green"] .glow { background:rgba(110,230,140,0.26); }
+        .bulb[data-color="gold"] .glow  { background:rgba(255,215,110,0.26); }
+        .bulb[data-color="cyan"] .glow  { background:rgba(110,230,240,0.26); }
+        .bulb[data-color="pink"] .glow  { background:rgba(255,160,200,0.26); }
 
-        /* lit state: bulb surface brightens slightly while glow runs */
-        .string-lights .bulb.lit::after {
-            filter: brightness(1.25) saturate(1.1);
-            box-shadow:
-              0 0 26px rgba(255,255,255,0.06),
-              0 0 30px rgba(255,255,255,0.05),
-              inset -4px -6px 12px rgba(0,0,0,0.45);
-            transform: translateY(-2px) scale(1.06);
+        /* When glowing */
+        .bulb.lit::after {
+            filter:brightness(1.28) saturate(1.15);
+            transform:translateY(-1px) scale(1.06);
         }
 
-        /* soft glow animation (only affects glow element opacity/scale) */
         @keyframes soft-glow {
-          0%   { opacity: 0; transform: scale(0.96); }
-          50%  { opacity: 1; transform: scale(1.03); }
-          100% { opacity: 0; transform: scale(0.98); }
-        }
-
-        /* STATIC hanging positions: use margin-top (no transform, no transition) */
-        .string-lights .bulb:nth-child(1)  { margin-top: 6px; }
-        .string-lights .bulb:nth-child(2)  { margin-top: 8px; }
-        .string-lights .bulb:nth-child(3)  { margin-top: 7px; }
-        .string-lights .bulb:nth-child(4)  { margin-top: 9px; }
-        .string-lights .bulb:nth-child(5)  { margin-top: 6px; }
-        .string-lights .bulb:nth-child(6)  { margin-top: 8px; }
-        .string-lights .bulb:nth-child(7)  { margin-top: 7px; }
-        .string-lights .bulb:nth-child(8)  { margin-top: 9px; }
-        .string-lights .bulb:nth-child(9)  { margin-top: 6px; }
-        .string-lights .bulb:nth-child(10) { margin-top: 8px; }
-        .string-lights .bulb:nth-child(11) { margin-top: 7px; }
-        .string-lights .bulb:nth-child(12) { margin-top: 9px; }
-        .string-lights .bulb:nth-child(13) { margin-top: 6px; }
-        .string-lights .bulb:nth-child(14) { margin-top: 8px; }
-
-        @media (max-width: 640px) {
-            .string-lights { top: -6px; height: 72px; }
-            .string-lights .bulb { margin: 0 6px; --size: 9px; }
-            .string-lights .bulb .glow { width: 42px; height: 42px; filter: blur(12px); }
-            .string-lights .bulb:nth-child(1)  { margin-top: 5px; }
-            .string-lights .bulb:nth-child(2)  { margin-top: 6px; }
-            .string-lights .bulb:nth-child(3)  { margin-top: 6px; }
-            .string-lights .bulb:nth-child(4)  { margin-top: 7px; }
-            .string-lights .bulb:nth-child(5)  { margin-top: 5px; }
+            0% { opacity:0; transform:scale(0.95); }
+            50% { opacity:1; transform:scale(1.05); }
+            100% { opacity:0; transform:scale(0.97); }
         }
     </style>
 </head>
+
 <body>
 <div class="container">
 
-    <!-- string lights (inside container so they hang on the card) -->
+    <!-- STRING LIGHTS -->
     <div class="string-lights" aria-hidden="true">
-        <div class="bulb" data-color="red"></div>
-        <div class="bulb" data-color="green"></div>
-        <div class="bulb" data-color="gold"></div>
-        <div class="bulb" data-color="cyan"></div>
-        <div class="bulb" data-color="pink"></div>
-        <div class="bulb" data-color="red"></div>
-        <div class="bulb" data-color="green"></div>
-        <div class="bulb" data-color="gold"></div>
-        <div class="bulb" data-color="cyan"></div>
-        <div class="bulb" data-color="pink"></div>
-        <div class="bulb" data-color="red"></div>
-        <div class="bulb" data-color="green"></div>
-        <div class="bulb" data-color="gold"></div>
-        <div class="bulb" data-color="cyan"></div>
+        {% for color in ["red","green","gold","cyan","pink",
+                         "red","green","gold","cyan","pink",
+                         "red","green","gold","cyan"] %}
+            <div class="bulb" data-color="{{ color }}"></div>
+        {% endfor %}
     </div>
 
-    <!-- Simple snow dots -->
-    <div class="snow"></div>
-    <div class="snow"></div>
-    <div class="snow"></div>
-    <div class="snow"></div>
-    <div class="snow"></div>
+    <!-- SNOW -->
+    <div class="snow"></div><div class="snow"></div><div class="snow"></div>
+    <div class="snow"></div><div class="snow"></div>
 
     <div class="music-control">
-        <button class="btn btn-secondary music-btn" type="button" onclick="toggleMusic()">🎵 Music</button>
+        <button class="btn btn-secondary" onclick="toggleMusic()">🎵 Music</button>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -266,66 +209,57 @@
     <div class="footer">Built with ❤️ for family Secret Santa</div>
 </div>
 
-<audio id="bg-music" loop>
-    <!-- <source src="{{ url_for('static', filename='music/christmas.mp3') }}" type="audio/mpeg"> -->
-</audio>
+<audio id="bg-music" loop></audio>
 
 <script>
-    const audioEl = document.getElementById("bg-music");
-    let musicPlaying = false;
-    function toggleMusic() {
-        if (!audioEl) return;
-        if (musicPlaying) { audioEl.pause(); musicPlaying = false; }
-        else { audioEl.play().catch(()=>{}); musicPlaying = true; }
-    }
+const audioEl = document.getElementById("bg-music");
+let musicPlaying = false;
+function toggleMusic() {
+    if (!audioEl) return;
+    if (musicPlaying) { audioEl.pause(); musicPlaying = false; }
+    else { audioEl.play().catch(()=>{}); musicPlaying = true; }
+}
+</script>
+
+<!-- Force-clean transforms in case old deployments left inline styles -->
+<script>
+(function() {
+    document.querySelectorAll(".string-lights .bulb").forEach(b => {
+        b.style.transform = "";
+        b.style.animation = "";
+        b.style.animationDelay = "";
+    });
+})();
 </script>
 
 <script>
-/* JS only controls the glow element and the .lit class.
-   No transform or animation values are touched here. */
+/* Glow-only logic */
 (function() {
-    try {
-        const bulbs = document.querySelectorAll(".string-lights .bulb");
-        bulbs.forEach((b, i) => {
-            // ensure glow element exists
-            let glow = b.querySelector(".glow");
-            if (!glow) {
-                glow = document.createElement("span");
-                glow.className = "glow";
-                b.appendChild(glow);
-            }
+    const bulbs = document.querySelectorAll(".string-lights .bulb");
+    bulbs.forEach((b, i) => {
+        let glow = document.createElement("span");
+        glow.className = "glow";
+        b.appendChild(glow);
 
-            const minDelay = 900;
-            const maxDelay = 4000;
-            const minDur = 1400;
-            const maxDur = 3000;
+        function schedule() {
+            const dur = Math.random() * 1800 + 1200;
+            const delay = Math.random() * 2800 + 600;
 
-            function schedule() {
-                const delay = Math.random() * (maxDelay - minDelay) + minDelay;
+            setTimeout(() => {
+                glow.style.animation = `soft-glow ${dur}ms ease-in-out`;
+                b.classList.add("lit");
+
                 setTimeout(() => {
-                    const dur = Math.random() * (maxDur - minDur) + minDur;
+                    glow.style.animation = "";
+                    b.classList.remove("lit");
+                    schedule();
+                }, dur + 40);
 
-                    // trigger glow animation and lit state
-                    glow.style.opacity = "1";
-                    glow.style.animation = `soft-glow ${dur}ms ease-in-out`;
-                    glow.style.animationFillMode = "forwards";
-                    b.classList.add("lit");
+            }, delay);
+        }
 
-                    setTimeout(() => {
-                        glow.style.animation = "";
-                        glow.style.opacity = "0";
-                        b.classList.remove("lit");
-                        schedule();
-                    }, dur + 60);
-                }, delay + i * 60);
-            }
-
-            // start scheduling (staggered by small amount)
-            setTimeout(schedule, 200 + i * 60);
-        });
-    } catch (e) {
-        console.warn("Lights init failed", e);
-    }
+        schedule();
+    });
 })();
 </script>
 
