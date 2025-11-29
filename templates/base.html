@@ -103,16 +103,17 @@
             z-index: 52;
         }
 
+        /* bulb container (static - no transforms on the bulb element) */
         .string-lights .bulb {
             --size: 10px;
             width: calc(var(--size) * 1.4);
             height: calc(var(--size) * 1.9);
             margin: 0 8px;
             position: relative;
-            transform-origin: 50% 0;
             z-index: 55;
             display: flex;
             align-items: flex-start;
+            /* removed transform-origin and any transition on transform to avoid jitter */
         }
 
         .string-lights .bulb::before {
@@ -192,33 +193,31 @@
           100% { opacity: 0; transform: scale(0.98); }
         }
 
-        /* static hanging offsets so lights look natural but do not move */
-        /* change values to tweak hang depth/angle */
-        .string-lights .bulb:nth-child(1)  { transform: translateY(6px) rotate(-2deg); }
-        .string-lights .bulb:nth-child(2)  { transform: translateY(8px) rotate(1deg); }
-        .string-lights .bulb:nth-child(3)  { transform: translateY(7px) rotate(-1deg); }
-        .string-lights .bulb:nth-child(4)  { transform: translateY(9px) rotate(2deg); }
-        .string-lights .bulb:nth-child(5)  { transform: translateY(6px) rotate(-1deg); }
-        .string-lights .bulb:nth-child(6)  { transform: translateY(8px) rotate(0deg); }
-        .string-lights .bulb:nth-child(7)  { transform: translateY(7px) rotate(-2deg); }
-        .string-lights .bulb:nth-child(8)  { transform: translateY(9px) rotate(1deg); }
-        .string-lights .bulb:nth-child(9)  { transform: translateY(6px) rotate(-1deg); }
-        .string-lights .bulb:nth-child(10) { transform: translateY(8px) rotate(2deg); }
-        .string-lights .bulb:nth-child(11) { transform: translateY(7px) rotate(-1deg); }
-        .string-lights .bulb:nth-child(12) { transform: translateY(9px) rotate(0deg); }
-        .string-lights .bulb:nth-child(13) { transform: translateY(6px) rotate(-2deg); }
-        .string-lights .bulb:nth-child(14) { transform: translateY(8px) rotate(1deg); }
+        /* STATIC hanging positions: use margin-top (no transform, no transition) */
+        .string-lights .bulb:nth-child(1)  { margin-top: 6px; }
+        .string-lights .bulb:nth-child(2)  { margin-top: 8px; }
+        .string-lights .bulb:nth-child(3)  { margin-top: 7px; }
+        .string-lights .bulb:nth-child(4)  { margin-top: 9px; }
+        .string-lights .bulb:nth-child(5)  { margin-top: 6px; }
+        .string-lights .bulb:nth-child(6)  { margin-top: 8px; }
+        .string-lights .bulb:nth-child(7)  { margin-top: 7px; }
+        .string-lights .bulb:nth-child(8)  { margin-top: 9px; }
+        .string-lights .bulb:nth-child(9)  { margin-top: 6px; }
+        .string-lights .bulb:nth-child(10) { margin-top: 8px; }
+        .string-lights .bulb:nth-child(11) { margin-top: 7px; }
+        .string-lights .bulb:nth-child(12) { margin-top: 9px; }
+        .string-lights .bulb:nth-child(13) { margin-top: 6px; }
+        .string-lights .bulb:nth-child(14) { margin-top: 8px; }
 
         @media (max-width: 640px) {
             .string-lights { top: -6px; height: 72px; }
             .string-lights .bulb { margin: 0 6px; --size: 9px; }
             .string-lights .bulb .glow { width: 42px; height: 42px; filter: blur(12px); }
-            /* re-run smaller static hang values for mobile */
-            .string-lights .bulb:nth-child(1)  { transform: translateY(5px) rotate(-2deg); }
-            .string-lights .bulb:nth-child(2)  { transform: translateY(6px) rotate(1deg); }
-            .string-lights .bulb:nth-child(3)  { transform: translateY(6px) rotate(-1deg); }
-            .string-lights .bulb:nth-child(4)  { transform: translateY(7px) rotate(1deg); }
-            .string-lights .bulb:nth-child(5)  { transform: translateY(5px) rotate(-1deg); }
+            .string-lights .bulb:nth-child(1)  { margin-top: 5px; }
+            .string-lights .bulb:nth-child(2)  { margin-top: 6px; }
+            .string-lights .bulb:nth-child(3)  { margin-top: 6px; }
+            .string-lights .bulb:nth-child(4)  { margin-top: 7px; }
+            .string-lights .bulb:nth-child(5)  { margin-top: 5px; }
         }
     </style>
 </head>
@@ -318,11 +317,11 @@
                         b.classList.remove("lit");
                         schedule();
                     }, dur + 60);
-                }, delay);
+                }, delay + i * 60);
             }
 
             // start scheduling (staggered by small amount)
-            setTimeout(schedule, 200 + i * 80);
+            setTimeout(schedule, 200 + i * 60);
         });
     } catch (e) {
         console.warn("Lights init failed", e);
