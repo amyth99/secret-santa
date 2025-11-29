@@ -172,9 +172,16 @@
             100% { opacity: 0.10; transform: scale(0.98); }
         }
 
+       /* replace your existing .svg-lights .bulb-glow rule with this */
         .svg-lights .bulb-glow {
+            /* keep the soft glow animation */
             animation: bulbSoftGlow 2.6s ease-in-out infinite;
-            transform-origin: center;
+            /* IMPORTANT: ensure scale happens around the actual circle center */
+            transform-box: fill-box;            /* use SVG geometry for transform origin */
+            transform-origin: center center;    /* center of the circle */
+            will-change: opacity, transform;    /* performance hint */
+            mix-blend-mode: screen;
+            opacity: 0.20;
         }
 
         /* stagger timing for natural twinkle */
