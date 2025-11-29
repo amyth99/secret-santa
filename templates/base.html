@@ -237,21 +237,23 @@
             top: 18px;
             left: 50%;
             transform: translateX(-50%);
-            width: 44px;
-            height: 44px;
+            width: 56px;             /* slightly bigger */
+            height: 56px;
             border-radius: 50%;
-            z-index: 8;
+            z-index: 60;             /* IMPORTANT: put above the bulb ::after (which was z-index:12) */
             opacity: 0;
-            filter: blur(12px);
+            filter: blur(10px);
             pointer-events: none;
+            mix-blend-mode: screen;
         }
 
         /* default low-glow colors (soft) */
-        .string-lights .bulb[data-color="red"] .glow { background: rgba(255,90,110,0.12); }
-        .string-lights .bulb[data-color="green"] .glow { background: rgba(110,230,140,0.12); }
-        .string-lights .bulb[data-color="gold"] .glow { background: rgba(255,215,110,0.12); }
-        .string-lights .bulb[data-color="cyan"] .glow { background: rgba(110,230,240,0.12); }
-        .string-lights .bulb[data-color="pink"] .glow { background: rgba(255,160,200,0.12); }
+        .string-lights .bulb[data-color="red"] .glow   { background: rgba(255,90,110,0.22); }
+        .string-lights .bulb[data-color="green"] .glow { background: rgba(110,230,140,0.22); }
+        .string-lights .bulb[data-color="gold"] .glow  { background: rgba(255,215,110,0.22); }
+        .string-lights .bulb[data-color="cyan"] .glow  { background: rgba(110,230,240,0.22); }
+        .string-lights .bulb[data-color="pink"] .glow  { background: rgba(255,160,200,0.22); }
+
 
         /* hanging + gentle sway */
         .string-lights .bulb {
@@ -268,9 +270,9 @@
 
         /* soft glow keyframes (gentle pulse) */
         @keyframes soft-glow {
-            0%   { opacity: 0;   transform: scale(0.96); }
-            50%  { opacity: 0.9; transform: scale(1.02); }
-            100% { opacity: 0;   transform: scale(0.98); }
+          0%   { opacity: 0; transform: scale(0.96); }
+          50%  { opacity: 1; transform: scale(1.03); } /* opacity 1 at peak */
+          100% { opacity: 0; transform: scale(0.98); }
         }
 
         @media (max-width: 640px) {
