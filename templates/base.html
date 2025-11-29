@@ -9,21 +9,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        :root {
+        :root{
             --accent-blue: #38bdf8;
             --accent-red: #ff4d4d;
             --accent-white: #ffffff;
             --card-bg: rgba(15,23,42,0.95);
+            --stripe-width: 12px;
         }
 
+        /* ---------- Base ---------- */
         body {
             margin: 0;
             padding: 0;
-            font-family: "Nunito", system-ui, sans-serif;
+            font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background: radial-gradient(circle at top, #1e293b 0, #020617 50%, #000 100%);
             color: #f9fafb;
         }
-
         .container {
             max-width: 720px;
             margin: 40px auto;
@@ -33,133 +34,217 @@
             box-shadow: 0 24px 60px rgba(0,0,0,0.55);
             border: 1px solid rgba(148,163,184,0.18);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
-
-        h1, h2, h3 { margin-top: 0; text-align: center; }
-
+        h1,h2,h3 { margin:0; text-align:center; }
         a { color: var(--accent-blue); }
         a:hover { color: var(--accent-red); }
 
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 10px 18px;
-            border-radius: 999px;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 700;
-            transition: transform 0.1s, box-shadow 0.15s, filter 0.1s;
-        }
+        /* ---------- Buttons ---------- */
+        .btn { display:inline-block; padding:10px 18px; border-radius:999px; border:none; cursor:pointer; font-weight:700; font-size:14px; text-decoration:none; transition: transform .12s, box-shadow .12s; }
+        .btn-primary { background: linear-gradient(135deg,#22c55e,#4ade80); color:#052e16; box-shadow:0 0 12px rgba(34,197,94,0.36); }
+        .btn-primary:hover { transform: translateY(-1px) scale(1.03); box-shadow:0 0 18px rgba(34,197,94,0.52); }
+        .btn-secondary { background: linear-gradient(135deg,var(--accent-blue),#22d3ee); color:#02131f; border-top:2px solid var(--accent-white); border-bottom:2px solid var(--accent-red); padding-top:9px; padding-bottom:9px; }
 
-        /* CTA button (JOIN) */
-        .btn-primary {
-            background: linear-gradient(135deg, #22c55e, #4ade80);
-            color: #052e16;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
-        }
-        .btn-primary:hover {
-            transform: translateY(-1px) scale(1.03);
-            box-shadow: 0 0 18px rgba(34, 197, 94, 0.6);
-        }
-
-        /* Secondary button */
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--accent-blue), #22d3ee);
-            color: #02131f;
-        }
-
+        /* ---------- Inputs / forms ---------- */
         input[type="text"], input[type="password"], textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1px solid #4b5563;
-            background: #020617;
-            color: #e5e7eb;
-            font-size: 14px;
-            box-sizing: border-box;
+            width:100%; padding:10px 12px; border-radius:10px; border:1px solid #4b5563; background:#020617; color:#e5e7eb; font-size:14px; box-sizing:border-box;
         }
+        textarea { min-height:80px; resize:vertical; }
+        label { font-size:14px; color:#dbeafe; }
+        .field { margin-bottom:14px; }
 
-        textarea { resize: vertical; min-height: 80px; }
+        /* ---------- Flash ---------- */
+        .flash { padding:8px 10px; border-radius:8px; margin-bottom:12px; font-size:13px; }
+        .flash.error { background:#fee2e2; color:#7f1d1d; }
+        .flash.success { background:#dcfce7; color:#14532d; }
+        .flash.info { background:#e0f2fe; color:#0c4a6e; }
 
-        label { font-size: 14px; color: #dbeafe; }
-        .field { margin-bottom: 14px; }
+        /* ---------- Music control (above decorations) ---------- */
+        .music-control { position:absolute; top:16px; right:16px; z-index:1200; }
 
-        .flash {
-            padding: 8px 10px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 13px;
-        }
-        .flash.error { background: #fee2e2; color: #7f1d1d; }
-        .flash.success { background: #dcfce7; color: #14532d; }
-        .flash.info { background: #e0f2fe; color: #0c4a6e; }
-
-        .music-control {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            z-index: 200;
-        }
-
-        /* Snow */
-        .snow {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall 10s linear infinite;
-        }
-        .snow:nth-child(1) { left: 10%; animation-duration: 8s; }
-        .snow:nth-child(2) { left: 30%; animation-duration: 9s; animation-delay: 2s; }
-        .snow:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 4s; }
-        .snow:nth-child(4) { left: 70%; animation-duration: 11s; animation-delay: 1s; }
-        .snow:nth-child(5) { left: 90%; animation-duration: 10s; animation-delay: 3s; }
-
+        /* ---------- Snow (falling) ---------- */
+        .snow { position:absolute; width:4px; height:4px; background:white; border-radius:50%; opacity:0.8; animation: fall linear infinite; will-change: transform, opacity; z-index:20; pointer-events:none; }
+        .snow.s1 { left:10%; animation-duration:8s; animation-delay:0s; top:-10px; }
+        .snow.s2 { left:28%; animation-duration:9.5s; animation-delay:1.2s; top:-12px; }
+        .snow.s3 { left:48%; animation-duration:7.6s; animation-delay:0.6s; top:-8px; }
+        .snow.s4 { left:70%; animation-duration:11s; animation-delay:2.0s; top:-14px; }
+        .snow.s5 { left:88%; animation-duration:10.2s; animation-delay:1.0s; top:-16px; }
         @keyframes fall {
-            0% { transform: translateY(-10px); opacity: 0 }
-            10% { opacity: 0.95 }
-            100% { transform: translateY(500px); opacity: 0 }
+            0% { transform: translateY(-10px) scale(0.9); opacity:0; }
+            10% { opacity:0.9; transform: translateY(30px) scale(1); }
+            100% { transform: translateY(560px) scale(0.9); opacity:0; }
         }
 
-        .footer {
-            margin-top: 18px;
-            font-size: 11px;
-            text-align: center;
-            color: #9ca3af;
+        /* ---------- Candy-cane left stripe (inside card) ---------- */
+        .left-candy-stripe {
+            position:absolute; top:12px; bottom:12px; left:12px; width:var(--stripe-width);
+            border-radius:8px; pointer-events:none; z-index:40;
+            background: repeating-linear-gradient(
+                135deg,
+                var(--accent-red) 0 calc(var(--stripe-width)/2),
+                var(--accent-white) calc(var(--stripe-width)/2) var(--stripe-width)
+            );
+            box-shadow: inset 0 6px 14px rgba(0,0,0,0.25);
         }
+
+        /* add left padding so the content doesn't overlap stripe */
+        .content-with-stripe { padding-left: calc(var(--stripe-width) + 26px); }
+
+        @media (max-width:640px) {
+            :root { --stripe-width: 8px; }
+            .left-candy-stripe { left:10px; top:10px; bottom:10px; border-radius:6px; }
+            .content-with-stripe { padding-left: calc(var(--stripe-width) + 16px); }
+        }
+
+        /* ---------- Candy underline helper ---------- */
+        .candy-underline { position:relative; display:inline-block; padding-bottom:6px; }
+        .candy-underline::after {
+            content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-2px; width:58px; height:4px; border-radius:4px;
+            background: repeating-linear-gradient(90deg, var(--accent-red) 0 8px, var(--accent-white) 8px 16px); opacity:0.95;
+        }
+
+        /* ---------- String lights (SVG) ---------- */
+        .string-lights-wrap {
+            position:absolute; top:-6px; left:0; right:0; height:88px; pointer-events:none; z-index:800;
+            display:flex; justify-content:center; align-items:flex-start; overflow:visible;
+        }
+
+        .string-lights-svg { width:100%; max-width:760px; height:88px; display:block; margin:0 auto; pointer-events:none; }
+
+        /* bulb glow small twinkle: animate only opacity/blur (no movement) */
+        .bulb-glow { transform-origin:center; opacity:0; filter: blur(8px); mix-blend-mode:screen; transition: opacity .18s ease; }
+        .bulb-lit { opacity:1; filter: blur(10px); }
+
+        /* subtle opacity pulsing for some bulbs */
+        @keyframes bulb-pulse {
+            0% { opacity: 0.0; transform: scale(1); }
+            50% { opacity: 1.0; transform: scale(1.02); }
+            100% { opacity: 0.0; transform: scale(1); }
+        }
+
+        .glow-anim { animation: bulb-pulse 2000ms ease-in-out infinite; }
+        .glow-anim.slow { animation-duration: 3200ms; }
+        .glow-anim.fast { animation-duration: 1500ms; }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .glow-anim { animation: none; opacity:0.95; }
+            .snow { animation: none; }
+        }
+
+        /* ensure body content appears above stripe but below music control and lights where needed */
+        .content-layer { position:relative; z-index:100; }
+
+        .footer { margin-top:18px; font-size:11px; text-align:center; color:#9ca3af; }
+
     </style>
 </head>
-
 <body>
 <div class="container">
 
-    <!-- Snow -->
-    <div class="snow"></div>
-    <div class="snow"></div>
-    <div class="snow"></div>
-    <div class="snow"></div>
-    <div class="snow"></div>
+    <!-- left candy stripe -->
+    <div class="left-candy-stripe" aria-hidden="true"></div>
 
+    <!-- string lights svg (static positions, glows animate opacity only) -->
+    <div class="string-lights-wrap" aria-hidden="true">
+        <!-- Inline SVG so it's easy to style and never fetches external assets -->
+        <svg class="string-lights-svg" viewBox="0 0 760 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+            <!-- cable -->
+            <path d="M20,36 C120,18 200,18 300,36 C400,54 520,54 640,36 C720,24 740,24 740,24" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3" stroke-linecap="round" />
+            <!-- bulbs group (x positions chosen evenly) -->
+            <!-- bulb structure: group with a colored circle and an outer glow circle (glow controlled by CSS classes) -->
+            <!-- Bulb 1 -->
+            <g transform="translate(40,36)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#ff6b78" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim slow" cx="0" cy="6" r="18" fill="rgba(255,90,110,0.22)" />
+            </g>
+
+            <!-- Bulb 2 -->
+            <g transform="translate(110,30)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#8ef48a" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim" cx="0" cy="6" r="18" fill="rgba(110,230,140,0.22)" />
+            </g>
+
+            <!-- Bulb 3 -->
+            <g transform="translate(180,36)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#ffe08a" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim fast" cx="0" cy="6" r="18" fill="rgba(255,215,110,0.22)" />
+            </g>
+
+            <!-- Bulb 4 -->
+            <g transform="translate(260,30)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#8ef0ff" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim" cx="0" cy="6" r="18" fill="rgba(110,230,240,0.22)" />
+            </g>
+
+            <!-- Bulb 5 -->
+            <g transform="translate(340,36)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#ffb3e2" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim slow" cx="0" cy="6" r="18" fill="rgba(255,160,200,0.22)" />
+            </g>
+
+            <!-- Bulb 6 -->
+            <g transform="translate(420,30)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#ff6b78" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim fast" cx="0" cy="6" r="18" fill="rgba(255,90,110,0.22)" />
+            </g>
+
+            <!-- Bulb 7 -->
+            <g transform="translate(500,36)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#8ef48a" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim slow" cx="0" cy="6" r="18" fill="rgba(110,230,140,0.22)" />
+            </g>
+
+            <!-- Bulb 8 -->
+            <g transform="translate(580,30)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#ffe08a" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim" cx="0" cy="6" r="18" fill="rgba(255,215,110,0.22)" />
+            </g>
+
+            <!-- Bulb 9 -->
+            <g transform="translate(660,36)">
+                <rect x="-3" y="-18" width="6" height="8" rx="2" fill="#111" opacity="0.7" />
+                <circle cx="0" cy="6" r="8" fill="#8ef0ff" stroke="rgba(0,0,0,0.18)" stroke-width="1" />
+                <circle class="bulb-glow glow-anim slow" cx="0" cy="6" r="18" fill="rgba(110,230,240,0.22)" />
+            </g>
+        </svg>
+    </div>
+
+    <!-- Snow decor -->
+    <div class="snow s1" aria-hidden="true"></div>
+    <div class="snow s2" aria-hidden="true"></div>
+    <div class="snow s3" aria-hidden="true"></div>
+    <div class="snow s4" aria-hidden="true"></div>
+    <div class="snow s5" aria-hidden="true"></div>
+
+    <!-- Music button (above decorations) -->
     <div class="music-control">
         <button class="btn btn-secondary" type="button" onclick="toggleMusic()">🎵 Music</button>
     </div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, msg in messages %}
-        <div class="flash {{ category }}">{{ msg }}</div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
+    <!-- content: give left stripe breathing room using content-with-stripe -->
+    <div class="content-layer content-with-stripe">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, msg in messages %}
+              <div class="flash {{ category }}">{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
-    {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
 
-    <div class="footer">Built with ❤️ for family Secret Santa</div>
+        <div class="footer">Built with ❤️ for family Secret Santa</div>
+    </div>
 </div>
 
 <audio id="bg-music" loop></audio>
@@ -168,6 +253,7 @@
     const audioEl = document.getElementById("bg-music");
     let musicPlaying = false;
     function toggleMusic() {
+        if (!audioEl) return;
         if (musicPlaying) { audioEl.pause(); musicPlaying = false; }
         else { audioEl.play().catch(()=>{}); musicPlaying = true; }
     }
