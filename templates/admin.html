@@ -54,4 +54,9 @@
 </ul>
 {% endif %}
 
+<form method="POST" action="{{ url_for('admin_reset') }}" style="margin-top:20px;">
+    <input type="password" name="admin_password" placeholder="Admin password" required>
+    <button class="btn btn-secondary" type="submit" style="margin-left:10px;">Reset All Data</button>
+</form>
+
 {% endblock %}

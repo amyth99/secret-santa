@@ -475,3 +475,21 @@ if __name__ == "__main__":
         init_db()
     app.run(debug=True)
 
+@app.route("/admin/reset", methods=["POST"])
+def admin_reset():
+    admin_password = request.form.get("admin_password", "")
+
+    if admin_password != ADMIN_PASSWORD:
+        flash("Wrong admin password.", "error")
+        return redirect(url_for("admin"))
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute("DELETE FROM assignments;")
+    cur.execute("DELETE FROM registrations;")
+    conn.commit()
+    cur.close()
+
+    flash("All data cleared successfully.", "success")
+    return redirect(url_for("admin"))
