@@ -103,12 +103,7 @@
             top: 16px;
             right: 16px;
             font-size: 12px;
-        }
-
-        /* keep music button above lights */
-        .music-btn {
-            position: relative;
-            z-index: 80;
+            z-index: 120; /* keep above lights */
         }
 
         /* Simple floating snow dots */
@@ -152,7 +147,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            z-index: 40;            /* below music button */
+            z-index: 50;            /* below music control but above container content if needed */
             overflow: visible;
             padding-top: 6px;
         }
@@ -167,7 +162,7 @@
             height: 2px;
             background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
             border-radius: 2px;
-            z-index: 42;
+            z-index: 52;
         }
 
         /* bulb container (smaller bulbs) */
@@ -178,9 +173,10 @@
             margin: 0 8px;
             position: relative;
             transform-origin: 50% 0;
-            z-index: 45;
+            z-index: 55;
             display: flex;
             align-items: flex-start;
+            transition: transform 160ms ease;
         }
 
         /* small holder / clip */
@@ -194,10 +190,10 @@
             height: 8px;
             border-radius: 3px;
             background: rgba(16,16,16,0.75);
-            z-index: 10;
+            z-index: 60;
         }
 
-        /* glass bulb */
+        /* glass bulb (base) */
         .string-lights .bulb::after {
             content: "";
             position: absolute;
@@ -207,14 +203,15 @@
             width: calc(var(--size) * 2.2);
             height: calc(var(--size) * 2.2);
             border-radius: 50% 50% 45% 45%;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.08); /* slightly brighter base so lit effect shows */
             box-shadow: inset -4px -6px 12px rgba(0,0,0,0.6);
-            z-index: 12;
-            transition: transform 200ms ease;
-            will-change: transform, box-shadow;
+            z-index: 70; /* base layer for bulb surface */
+            transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+            will-change: transform, box-shadow, filter;
+            pointer-events: none;
         }
 
-        /* color variants (base) */
+        /* color variants (bulb surface) */
         .string-lights .bulb[data-color="red"]::after {
             background: linear-gradient(180deg,#ff6b78,#b40a1a);
         }
@@ -231,29 +228,29 @@
             background: linear-gradient(180deg,#ffb3e2,#c1007a);
         }
 
-        /* glow element (soft, subtle) */
+        /* glow element (above the bulb surface) */
         .string-lights .bulb .glow {
             position: absolute;
-            top: 18px;
+            top: 12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 56px;             /* slightly bigger */
-            height: 56px;
+            width: 80px;                 /* large soft glow */
+            height: 80px;
             border-radius: 50%;
-            z-index: 60;             /* IMPORTANT: put above the bulb ::after (which was z-index:12) */
+            z-index: 200;                /* very high so glow sits above pseudo-element */
             opacity: 0;
-            filter: blur(10px);
+            filter: blur(18px);
             pointer-events: none;
             mix-blend-mode: screen;
+            transition: opacity 120ms linear;
         }
 
-        /* default low-glow colors (soft) */
-        .string-lights .bulb[data-color="red"] .glow   { background: rgba(255,90,110,0.22); }
-        .string-lights .bulb[data-color="green"] .glow { background: rgba(110,230,140,0.22); }
-        .string-lights .bulb[data-color="gold"] .glow  { background: rgba(255,215,110,0.22); }
-        .string-lights .bulb[data-color="cyan"] .glow  { background: rgba(110,230,240,0.22); }
-        .string-lights .bulb[data-color="pink"] .glow  { background: rgba(255,160,200,0.22); }
-
+        /* glow color strengths */
+        .string-lights .bulb[data-color="red"] .glow   { background: rgba(255,90,110,0.28); }
+        .string-lights .bulb[data-color="green"] .glow { background: rgba(110,230,140,0.26); }
+        .string-lights .bulb[data-color="gold"] .glow  { background: rgba(255,215,110,0.26); }
+        .string-lights .bulb[data-color="cyan"] .glow  { background: rgba(110,230,240,0.26); }
+        .string-lights .bulb[data-color="pink"] .glow  { background: rgba(255,160,200,0.26); }
 
         /* hanging + gentle sway */
         .string-lights .bulb {
@@ -266,6 +263,16 @@
             0%   { transform: translateY(6px) rotate(-3deg); }
             50%  { transform: translateY(10px) rotate(3deg); }
             100% { transform: translateY(6px) rotate(-3deg); }
+        }
+
+        /* lit state: when JS triggers, make bulb surface brighter and pop a little */
+        .string-lights .bulb.lit::after {
+            filter: brightness(1.25) saturate(1.1);
+            box-shadow:
+              0 0 26px rgba(255,255,255,0.06),
+              0 0 30px rgba(255,255,255,0.05),
+              inset -4px -6px 12px rgba(0,0,0,0.45);
+            transform: translateY(-2px) scale(1.06);
         }
 
         /* soft glow keyframes (gentle pulse) */
@@ -282,9 +289,9 @@
                 --size: 9px;
             }
             .string-lights .bulb .glow {
-                width: 36px;
-                height: 36px;
-                filter: blur(10px);
+                width: 42px;
+                height: 42px;
+                filter: blur(12px);
             }
         }
     </style>
@@ -358,6 +365,7 @@
 
 <script>
 /* Twinkle / soft glow logic for string lights */
+/* JS now also toggles a .lit class on the bulb so the bulb surface visibly 'lights up' */
 (function() {
     try {
         const bulbs = document.querySelectorAll(".string-lights .bulb");
@@ -379,12 +387,22 @@
                 const delay = Math.random() * (maxDelay - minDelay) + minDelay;
                 setTimeout(() => {
                     const dur = Math.random() * (maxDur - minDur) + minDur;
+
+                    // start glow animation
+                    glow.style.opacity = "1";
                     glow.style.animation = `soft-glow ${dur}ms ease-in-out`;
                     glow.style.animationFillMode = "forwards";
+
+                    // also mark bulb as lit for the duration to brighten the surface
+                    b.classList.add("lit");
+
+                    // clear after animation
                     setTimeout(() => {
                         glow.style.animation = "";
+                        glow.style.opacity = "0";
+                        b.classList.remove("lit");
                         schedule();
-                    }, dur + 40);
+                    }, dur + 60);
                 }, delay + i * 80);
             }
 
