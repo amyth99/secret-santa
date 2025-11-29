@@ -58,8 +58,8 @@
             font-size: 14px;
             box-sizing: border-box;
         }
-        textarea { resize: vertical; min-height: 80px; }
 
+        textarea { resize: vertical; min-height: 80px; }
         .field { margin-bottom: 14px; }
         label { font-size: 14px; }
 
@@ -71,126 +71,46 @@
         .music-control { position: absolute; top: 16px; right: 16px; z-index: 120; }
 
         /* Snow */
-        .snow { position: absolute; width: 4px; height: 4px; background: white; border-radius: 50%; opacity: 0.8; animation: fall 10s linear infinite; }
+        .snow { 
+            position: absolute; 
+            width: 4px; 
+            height: 4px; 
+            background: white; 
+            border-radius: 50%; 
+            opacity: 0.8; 
+            animation: fall 10s linear infinite; 
+        }
         .snow:nth-child(1) { left: 10%; animation-duration: 8s; }
         .snow:nth-child(2) { left: 30%; animation-duration: 9s; animation-delay: 2s; }
         .snow:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 4s; }
         .snow:nth-child(4) { left: 70%; animation-duration: 11s; animation-delay: 1s; }
         .snow:nth-child(5) { left: 90%; animation-duration: 10s; animation-delay: 3s; }
-        @keyframes fall { 0%{transform:translateY(-10px);opacity:0;}10%{opacity:.9;}100%{transform:translateY(500px);opacity:0;} }
 
-        .footer { margin-top: 18px; text-align:center; font-size:11px; color:#9ca3af; }
-
-        /* String lights (static, no movement) */
-        .string-lights {
-            position: absolute;
-            top: -8px;
-            left: 0; right: 0;
-            height: 90px;
-            pointer-events: none;
-            display: flex;
-            justify-content: center;
-            z-index: 50;
+        @keyframes fall {
+            0% { transform: translateY(-10px); opacity: 0; }
+            10% { opacity: 0.9; }
+            100% { transform: translateY(500px); opacity: 0; }
         }
 
-        .string-lights::before {
-            content:"";
-            position:absolute;
-            top:28px;
-            left:6%; right:6%;
-            height:2px;
-            background:rgba(255,255,255,0.08);
-        }
-
-        .string-lights .bulb {
-            --size: 10px;
-            width: calc(var(--size)*1.5);
-            height: calc(var(--size)*1.8);
-            margin: 0 8px;
-            position: relative;
-            transform-origin: 50% 0;
-            /* STATIC — no animation */
-        }
-
-        /* Holder */
-        .string-lights .bulb::before {
-            content:"";
-            position:absolute;
-            top:0; left:50%; transform:translateX(-50%);
-            width:5px; height:8px;
-            background:rgba(16,16,16,0.8);
-            border-radius:3px;
-        }
-
-        /* Glass bulb */
-        .string-lights .bulb::after {
-            content:"";
-            position:absolute;
-            top:8px; left:50%; transform:translateX(-50%);
-            width: calc(var(--size)*2.2);
-            height: calc(var(--size)*2.2);
-            border-radius:50% 50% 45% 45%;
-            background: rgba(255,255,255,0.08);
-            box-shadow: inset -4px -6px 12px rgba(0,0,0,0.6);
-            z-index: 5;
-            transition: filter 200ms ease, transform 200ms ease;
-        }
-
-        /* Colors */
-        .bulb[data-color="red"]::after   { background: linear-gradient(180deg,#ff6b78,#b40a1a); }
-        .bulb[data-color="green"]::after { background: linear-gradient(180deg,#8ef48a,#0b662f); }
-        .bulb[data-color="gold"]::after  { background: linear-gradient(180deg,#ffe08a,#c38f0b); }
-        .bulb[data-color="cyan"]::after  { background: linear-gradient(180deg,#8ef0ff,#0aa0a8); }
-        .bulb[data-color="pink"]::after  { background: linear-gradient(180deg,#ffb3e2,#c1007a); }
-
-        /* Glow layer */
-        .bulb .glow {
-            position:absolute;
-            top:12px; left:50%; transform:translateX(-50%);
-            width:80px; height:80px;
-            border-radius:50%;
-            opacity:0;
-            filter:blur(18px);
-            mix-blend-mode:screen;
-            pointer-events:none;
-            z-index: 10;
-        }
-
-        .bulb[data-color="red"] .glow   { background:rgba(255,90,110,0.28); }
-        .bulb[data-color="green"] .glow { background:rgba(110,230,140,0.26); }
-        .bulb[data-color="gold"] .glow  { background:rgba(255,215,110,0.26); }
-        .bulb[data-color="cyan"] .glow  { background:rgba(110,230,240,0.26); }
-        .bulb[data-color="pink"] .glow  { background:rgba(255,160,200,0.26); }
-
-        /* When glowing */
-        .bulb.lit::after {
-            filter:brightness(1.28) saturate(1.15);
-            transform:translateY(-1px) scale(1.06);
-        }
-
-        @keyframes soft-glow {
-            0% { opacity:0; transform:scale(0.95); }
-            50% { opacity:1; transform:scale(1.05); }
-            100% { opacity:0; transform:scale(0.97); }
+        .footer {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 11px;
+            color: #9ca3af;
         }
     </style>
 </head>
 
 <body>
+
 <div class="container">
 
-    <!-- STRING LIGHTS -->
-    <div class="string-lights" aria-hidden="true">
-        {% for color in ["red","green","gold","cyan","pink",
-                         "red","green","gold","cyan","pink",
-                         "red","green","gold","cyan"] %}
-            <div class="bulb" data-color="{{ color }}"></div>
-        {% endfor %}
-    </div>
-
-    <!-- SNOW -->
-    <div class="snow"></div><div class="snow"></div><div class="snow"></div>
-    <div class="snow"></div><div class="snow"></div>
+    <!-- Snow only -->
+    <div class="snow"></div>
+    <div class="snow"></div>
+    <div class="snow"></div>
+    <div class="snow"></div>
+    <div class="snow"></div>
 
     <div class="music-control">
         <button class="btn btn-secondary" onclick="toggleMusic()">🎵 Music</button>
@@ -214,53 +134,17 @@
 <script>
 const audioEl = document.getElementById("bg-music");
 let musicPlaying = false;
+
 function toggleMusic() {
     if (!audioEl) return;
-    if (musicPlaying) { audioEl.pause(); musicPlaying = false; }
-    else { audioEl.play().catch(()=>{}); musicPlaying = true; }
+    if (musicPlaying) {
+        audioEl.pause();
+        musicPlaying = false;
+    } else {
+        audioEl.play().catch(()=>{});
+        musicPlaying = true;
+    }
 }
-</script>
-
-<!-- Force-clean transforms in case old deployments left inline styles -->
-<script>
-(function() {
-    document.querySelectorAll(".string-lights .bulb").forEach(b => {
-        b.style.transform = "";
-        b.style.animation = "";
-        b.style.animationDelay = "";
-    });
-})();
-</script>
-
-<script>
-/* Glow-only logic */
-(function() {
-    const bulbs = document.querySelectorAll(".string-lights .bulb");
-    bulbs.forEach((b, i) => {
-        let glow = document.createElement("span");
-        glow.className = "glow";
-        b.appendChild(glow);
-
-        function schedule() {
-            const dur = Math.random() * 1800 + 1200;
-            const delay = Math.random() * 2800 + 600;
-
-            setTimeout(() => {
-                glow.style.animation = `soft-glow ${dur}ms ease-in-out`;
-                b.classList.add("lit");
-
-                setTimeout(() => {
-                    glow.style.animation = "";
-                    b.classList.remove("lit");
-                    schedule();
-                }, dur + 40);
-
-            }, delay);
-        }
-
-        schedule();
-    });
-})();
 </script>
 
 </body>
