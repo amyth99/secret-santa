@@ -29,14 +29,8 @@
             border: 1px solid rgba(148, 163, 184, 0.18);
         }
 
-        h1, h2, h3 {
-            margin-top: 0;
-            text-align: center;
-        }
-
-        a {
-            color: #a5b4fc;
-        }
+        h1, h2, h3 { margin-top: 0; text-align: center; }
+        a { color: #a5b4fc; }
 
         .btn {
             display: inline-block;
@@ -52,94 +46,39 @@
             font-size: 14px;
             transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
         }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #38bdf8, #22d3ee);
-            color: #02131f;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px) scale(1.01);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.35);
-            filter: brightness(1.03);
-        }
+        .btn-secondary { background: linear-gradient(135deg, #38bdf8, #22d3ee); color: #02131f; }
+        .btn:hover { transform: translateY(-1px) scale(1.01); box-shadow: 0 10px 20px rgba(0,0,0,0.35); filter: brightness(1.03); }
 
         input[type="text"], input[type="password"], textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1px solid #4b5563;
-            background: #020617;
-            color: #e5e7eb;
-            box-sizing: border-box;
-            font-size: 14px;
+            width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #4b5563;
+            background: #020617; color: #e5e7eb; box-sizing: border-box; font-size: 14px;
         }
+        textarea { resize: vertical; min-height: 80px; }
+        label { font-size: 14px; }
+        .field { margin-bottom: 14px; }
 
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        label {
-            font-size: 14px;
-        }
-
-        .field {
-            margin-bottom: 14px;
-        }
-
-        .flash {
-            padding: 8px 10px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 13px;
-        }
+        .flash { padding: 8px 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; }
         .flash.error { background: #fee2e2; color: #7f1d1d; }
         .flash.success { background: #dcfce7; color: #14532d; }
         .flash.info { background: #e0f2fe; color: #0c4a6e; }
 
-        .music-control {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            font-size: 12px;
-            z-index: 120; /* keep above lights */
-        }
+        .music-control { position: absolute; top: 16px; right: 16px; font-size: 12px; z-index: 120; }
 
         /* Simple floating snow dots */
-        .snow {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall 10s linear infinite;
-        }
-
+        .snow { position: absolute; width: 4px; height: 4px; background: white; border-radius: 50%; opacity: 0.8; animation: fall 10s linear infinite; }
         .snow:nth-child(1) { left: 10%; animation-duration: 8s; animation-delay: 0s; }
         .snow:nth-child(2) { left: 30%; animation-duration: 9s; animation-delay: 2s; }
         .snow:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 4s; }
         .snow:nth-child(4) { left: 70%; animation-duration: 11s; animation-delay: 1s; }
         .snow:nth-child(5) { left: 90%; animation-duration: 10s; animation-delay: 3s; }
+        @keyframes fall { 0% { transform: translateY(-10px); opacity: 0; } 10% { opacity: 0.9; } 100% { transform: translateY(500px); opacity: 0; } }
 
-        @keyframes fall {
-            0% { transform: translateY(-10px); opacity: 0; }
-            10% { opacity: 0.9; }
-            100% { transform: translateY(500px); opacity: 0; }
-        }
+        .footer { margin-top: 18px; font-size: 11px; text-align: center; color: #9ca3af; }
 
-        .footer {
-            margin-top: 18px;
-            font-size: 11px;
-            text-align: center;
-            color: #9ca3af;
-        }
-
-        /* ---------- String lights (improved soft glow, hanging) ---------- */
+        /* ---------- String lights: static hanging, glow only ---------- */
         .string-lights {
             position: absolute;
-            top: -8px;              /* slightly above the top curve of container */
+            top: -8px;
             left: 0;
             right: 0;
             height: 96px;
@@ -147,12 +86,11 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            z-index: 50;            /* below music control but above container content if needed */
+            z-index: 50;
             overflow: visible;
             padding-top: 6px;
         }
 
-        /* cable line */
         .string-lights::before {
             content: "";
             position: absolute;
@@ -165,9 +103,8 @@
             z-index: 52;
         }
 
-        /* bulb container (smaller bulbs) */
         .string-lights .bulb {
-            --size: 10px; /* change to 8px if you want even smaller bulbs */
+            --size: 10px;
             width: calc(var(--size) * 1.4);
             height: calc(var(--size) * 1.9);
             margin: 0 8px;
@@ -176,10 +113,8 @@
             z-index: 55;
             display: flex;
             align-items: flex-start;
-            transition: transform 160ms ease;
         }
 
-        /* small holder / clip */
         .string-lights .bulb::before {
             content: "";
             position: absolute;
@@ -193,7 +128,6 @@
             z-index: 60;
         }
 
-        /* glass bulb (base) */
         .string-lights .bulb::after {
             content: "";
             position: absolute;
@@ -203,41 +137,31 @@
             width: calc(var(--size) * 2.2);
             height: calc(var(--size) * 2.2);
             border-radius: 50% 50% 45% 45%;
-            background: rgba(255,255,255,0.08); /* slightly brighter base so lit effect shows */
+            background: rgba(255,255,255,0.08);
             box-shadow: inset -4px -6px 12px rgba(0,0,0,0.6);
-            z-index: 70; /* base layer for bulb surface */
+            z-index: 70;
             transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
             will-change: transform, box-shadow, filter;
             pointer-events: none;
         }
 
-        /* color variants (bulb surface) */
-        .string-lights .bulb[data-color="red"]::after {
-            background: linear-gradient(180deg,#ff6b78,#b40a1a);
-        }
-        .string-lights .bulb[data-color="green"]::after {
-            background: linear-gradient(180deg,#8ef48a,#0b662f);
-        }
-        .string-lights .bulb[data-color="gold"]::after {
-            background: linear-gradient(180deg,#ffe08a,#c38f0b);
-        }
-        .string-lights .bulb[data-color="cyan"]::after {
-            background: linear-gradient(180deg,#8ef0ff,#0aa0a8);
-        }
-        .string-lights .bulb[data-color="pink"]::after {
-            background: linear-gradient(180deg,#ffb3e2,#c1007a);
-        }
+        /* color of bulb surface (static) */
+        .string-lights .bulb[data-color="red"]::after   { background: linear-gradient(180deg,#ff6b78,#b40a1a); }
+        .string-lights .bulb[data-color="green"]::after { background: linear-gradient(180deg,#8ef48a,#0b662f); }
+        .string-lights .bulb[data-color="gold"]::after  { background: linear-gradient(180deg,#ffe08a,#c38f0b); }
+        .string-lights .bulb[data-color="cyan"]::after  { background: linear-gradient(180deg,#8ef0ff,#0aa0a8); }
+        .string-lights .bulb[data-color="pink"]::after  { background: linear-gradient(180deg,#ffb3e2,#c1007a); }
 
-        /* glow element (above the bulb surface) */
+        /* glow element above the bulb surface */
         .string-lights .bulb .glow {
             position: absolute;
             top: 12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;                 /* large soft glow */
+            width: 80px;
             height: 80px;
             border-radius: 50%;
-            z-index: 200;                /* very high so glow sits above pseudo-element */
+            z-index: 200;
             opacity: 0;
             filter: blur(18px);
             pointer-events: none;
@@ -245,45 +169,13 @@
             transition: opacity 120ms linear;
         }
 
-        /* glow color strengths */
         .string-lights .bulb[data-color="red"] .glow   { background: rgba(255,90,110,0.28); }
         .string-lights .bulb[data-color="green"] .glow { background: rgba(110,230,140,0.26); }
         .string-lights .bulb[data-color="gold"] .glow  { background: rgba(255,215,110,0.26); }
         .string-lights .bulb[data-color="cyan"] .glow  { background: rgba(110,230,240,0.26); }
         .string-lights .bulb[data-color="pink"] .glow  { background: rgba(255,160,200,0.26); }
 
-        /* hanging + gentle sway */
-        .string-lights .bulb {
-            animation: hang-sway 5.5s ease-in-out infinite;
-            /* fallback duration */
-            animation-duration: 5.6s;
-        }
-        .string-lights .bulb:nth-child(odd) { animation-duration: 5.2s; }
-        .string-lights .bulb:nth-child(even) { animation-duration: 5.8s; }
-
-        /* small smooth phase offsets so bulbs don't sway exactly together */
-        .string-lights .bulb:nth-child(1)  { animation-delay: 0s; }
-        .string-lights .bulb:nth-child(2)  { animation-delay: 0.12s; }
-        .string-lights .bulb:nth-child(3)  { animation-delay: 0.24s; }
-        .string-lights .bulb:nth-child(4)  { animation-delay: 0.36s; }
-        .string-lights .bulb:nth-child(5)  { animation-delay: 0.48s; }
-        .string-lights .bulb:nth-child(6)  { animation-delay: 0.60s; }
-        .string-lights .bulb:nth-child(7)  { animation-delay: 0.08s; }
-        .string-lights .bulb:nth-child(8)  { animation-delay: 0.20s; }
-        .string-lights .bulb:nth-child(9)  { animation-delay: 0.32s; }
-        .string-lights .bulb:nth-child(10) { animation-delay: 0.44s; }
-        .string-lights .bulb:nth-child(11) { animation-delay: 0.56s; }
-        .string-lights .bulb:nth-child(12) { animation-delay: 0.16s; }
-        .string-lights .bulb:nth-child(13) { animation-delay: 0.28s; }
-        .string-lights .bulb:nth-child(14) { animation-delay: 0.40s; }
-
-        @keyframes hang-sway {
-            0%   { transform: translateY(6px) rotate(-3deg); }
-            50%  { transform: translateY(10px) rotate(3deg); }
-            100% { transform: translateY(6px) rotate(-3deg); }
-        }
-
-        /* lit state: when JS triggers, make bulb surface brighter and pop a little */
+        /* lit state: bulb surface brightens slightly while glow runs */
         .string-lights .bulb.lit::after {
             filter: brightness(1.25) saturate(1.1);
             box-shadow:
@@ -293,31 +185,47 @@
             transform: translateY(-2px) scale(1.06);
         }
 
-        /* soft glow keyframes (gentle pulse) */
+        /* soft glow animation (only affects glow element opacity/scale) */
         @keyframes soft-glow {
           0%   { opacity: 0; transform: scale(0.96); }
-          50%  { opacity: 1; transform: scale(1.03); } /* opacity 1 at peak */
+          50%  { opacity: 1; transform: scale(1.03); }
           100% { opacity: 0; transform: scale(0.98); }
         }
 
+        /* static hanging offsets so lights look natural but do not move */
+        /* change values to tweak hang depth/angle */
+        .string-lights .bulb:nth-child(1)  { transform: translateY(6px) rotate(-2deg); }
+        .string-lights .bulb:nth-child(2)  { transform: translateY(8px) rotate(1deg); }
+        .string-lights .bulb:nth-child(3)  { transform: translateY(7px) rotate(-1deg); }
+        .string-lights .bulb:nth-child(4)  { transform: translateY(9px) rotate(2deg); }
+        .string-lights .bulb:nth-child(5)  { transform: translateY(6px) rotate(-1deg); }
+        .string-lights .bulb:nth-child(6)  { transform: translateY(8px) rotate(0deg); }
+        .string-lights .bulb:nth-child(7)  { transform: translateY(7px) rotate(-2deg); }
+        .string-lights .bulb:nth-child(8)  { transform: translateY(9px) rotate(1deg); }
+        .string-lights .bulb:nth-child(9)  { transform: translateY(6px) rotate(-1deg); }
+        .string-lights .bulb:nth-child(10) { transform: translateY(8px) rotate(2deg); }
+        .string-lights .bulb:nth-child(11) { transform: translateY(7px) rotate(-1deg); }
+        .string-lights .bulb:nth-child(12) { transform: translateY(9px) rotate(0deg); }
+        .string-lights .bulb:nth-child(13) { transform: translateY(6px) rotate(-2deg); }
+        .string-lights .bulb:nth-child(14) { transform: translateY(8px) rotate(1deg); }
+
         @media (max-width: 640px) {
             .string-lights { top: -6px; height: 72px; }
-            .string-lights .bulb {
-                margin: 0 6px;
-                --size: 9px;
-            }
-            .string-lights .bulb .glow {
-                width: 42px;
-                height: 42px;
-                filter: blur(12px);
-            }
+            .string-lights .bulb { margin: 0 6px; --size: 9px; }
+            .string-lights .bulb .glow { width: 42px; height: 42px; filter: blur(12px); }
+            /* re-run smaller static hang values for mobile */
+            .string-lights .bulb:nth-child(1)  { transform: translateY(5px) rotate(-2deg); }
+            .string-lights .bulb:nth-child(2)  { transform: translateY(6px) rotate(1deg); }
+            .string-lights .bulb:nth-child(3)  { transform: translateY(6px) rotate(-1deg); }
+            .string-lights .bulb:nth-child(4)  { transform: translateY(7px) rotate(1deg); }
+            .string-lights .bulb:nth-child(5)  { transform: translateY(5px) rotate(-1deg); }
         }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <!-- Christmas string lights (inside container so they hang on the card) -->
+    <!-- string lights (inside container so they hang on the card) -->
     <div class="string-lights" aria-hidden="true">
         <div class="bulb" data-color="red"></div>
         <div class="bulb" data-color="green"></div>
@@ -356,9 +264,7 @@
 
     {% block content %}{% endblock %}
 
-    <div class="footer">
-        Built with ❤️ for family Secret Santa
-    </div>
+    <div class="footer">Built with ❤️ for family Secret Santa</div>
 </div>
 
 <audio id="bg-music" loop>
@@ -368,27 +274,21 @@
 <script>
     const audioEl = document.getElementById("bg-music");
     let musicPlaying = false;
-
     function toggleMusic() {
         if (!audioEl) return;
-        if (musicPlaying) {
-            audioEl.pause();
-            musicPlaying = false;
-        } else {
-            audioEl.play().catch(() => {});
-            musicPlaying = true;
-        }
+        if (musicPlaying) { audioEl.pause(); musicPlaying = false; }
+        else { audioEl.play().catch(()=>{}); musicPlaying = true; }
     }
 </script>
 
 <script>
-/* Twinkle / soft glow logic for string lights */
-/* JS now only controls glow and .lit class — it no longer writes transforms */
+/* JS only controls the glow element and the .lit class.
+   No transform or animation values are touched here. */
 (function() {
     try {
         const bulbs = document.querySelectorAll(".string-lights .bulb");
         bulbs.forEach((b, i) => {
-            // add glow element if missing
+            // ensure glow element exists
             let glow = b.querySelector(".glow");
             if (!glow) {
                 glow = document.createElement("span");
@@ -398,37 +298,31 @@
 
             const minDelay = 900;
             const maxDelay = 4000;
-            const minDur   = 1400;
-            const maxDur   = 3000;
+            const minDur = 1400;
+            const maxDur = 3000;
 
             function schedule() {
                 const delay = Math.random() * (maxDelay - minDelay) + minDelay;
                 setTimeout(() => {
                     const dur = Math.random() * (maxDur - minDur) + minDur;
 
-                    // start glow animation
+                    // trigger glow animation and lit state
                     glow.style.opacity = "1";
                     glow.style.animation = `soft-glow ${dur}ms ease-in-out`;
                     glow.style.animationFillMode = "forwards";
-
-                    // also mark bulb as lit for the duration to brighten the surface
                     b.classList.add("lit");
 
-                    // clear after animation
                     setTimeout(() => {
                         glow.style.animation = "";
                         glow.style.opacity = "0";
                         b.classList.remove("lit");
                         schedule();
                     }, dur + 60);
-                }, delay + i * 80);
+                }, delay);
             }
 
-            // don't set transform here; CSS handles sway and we use animation-delay via CSS nth-child
-            // small inline stagger (optional) — keeps JS lightweight and avoids transform conflicts
-            b.style.animationDelay = `${(i % 6) * 0.12}s`;
-
-            setTimeout(schedule, 300 + i * 60);
+            // start scheduling (staggered by small amount)
+            setTimeout(schedule, 200 + i * 80);
         });
     } catch (e) {
         console.warn("Lights init failed", e);
