@@ -140,6 +140,141 @@
             text-align: center;
             color: #9ca3af;
         }
+        /* String lights (place near other styles in base.html) */
+        .string-lights {
+        position: absolute;
+        top: -20px; /* slightly above the container */
+        left: 0;
+        right: 0;
+        height: 80px;
+        pointer-events: none; /* clicks fall through */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 40;
+        overflow: visible;
+        }
+
+        /* decorative cable */
+        .string-lights::before {
+        content: "";
+        position: absolute;
+        top: 24px;
+        left: 8%;
+        right: 8%;
+        height: 2px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        transform: translateY(0px);
+        border-radius: 2px;
+        z-index: 20;
+        }
+
+        /* bulb base */
+        .string-lights .bulb {
+        --size: 14px;
+        width: calc(var(--size) * 1.6);
+        height: calc(var(--size) * 2);
+        margin: 0 10px;
+        position: relative;
+        transform-origin: 50% 0;
+        z-index: 50;
+        filter: drop-shadow(0 6px 8px rgba(0,0,0,0.45));
+        }
+
+        /* little holder */
+        .string-lights .bulb::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 10px;
+        border-radius: 3px;
+        background: rgba(20,20,20,0.65);
+        z-index: 10;
+        }
+
+        /* glass bulb */
+        .string-lights .bulb::after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 22px;
+        height: 26px;
+        border-radius: 50% 50% 45% 45%;
+        background: rgba(255,255,255,0.06);
+        box-shadow: inset -6px -8px 18px rgba(0,0,0,0.55);
+        z-index: 12;
+        transition: transform 200ms ease;
+        }
+
+        /* color variants (base low glow) */
+        .string-lights .bulb[data-color="red"]::after {
+        background: linear-gradient(180deg,#ff4d6d,#b40a1a);
+        box-shadow: 0 6px 18px rgba(180,10,26,0.22), inset -6px -8px 18px rgba(0,0,0,0.55);
+        }
+        .string-lights .bulb[data-color="green"]::after {
+        background: linear-gradient(180deg,#8ef48a,#0b662f);
+        box-shadow: 0 6px 18px rgba(11,102,47,0.22), inset -6px -8px 18px rgba(0,0,0,0.55);
+        }
+        .string-lights .bulb[data-color="gold"]::after {
+        background: linear-gradient(180deg,#ffe08a,#c38f0b);
+        box-shadow: 0 6px 18px rgba(195,143,11,0.22), inset -6px -8px 18px rgba(0,0,0,0.55);
+        }
+        .string-lights .bulb[data-color="cyan"]::after {
+        background: linear-gradient(180deg,#8ef0ff,#0aa0a8);
+        box-shadow: 0 6px 18px rgba(10,160,168,0.22), inset -6px -8px 18px rgba(0,0,0,0.55);
+        }
+        .string-lights .bulb[data-color="pink"]::after {
+        background: linear-gradient(180deg,#ffb3e2,#c1007a);
+        box-shadow: 0 6px 18px rgba(193,0,122,0.22), inset -6px -8px 18px rgba(0,0,0,0.55);
+        }
+
+        /* glow pseudo-element (for twinkle effect) */
+        .string-lights .bulb .glow {
+        position: absolute;
+        top: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        z-index: 8;
+        opacity: 0;
+        filter: blur(8px);
+        pointer-events: none;
+        }
+
+        /* default low glow colors, overridden by JS for twinkle */
+        .string-lights .bulb[data-color="red"] .glow { background: rgba(255,77,109,0.12); }
+        .string-lights .bulb[data-color="green"] .glow { background: rgba(142,244,138,0.12); }
+        .string-lights .bulb[data-color="gold"] .glow { background: rgba(255,224,138,0.12); }
+        .string-lights .bulb[data-color="cyan"] .glow { background: rgba(142,240,255,0.12); }
+        .string-lights .bulb[data-color="pink"] .glow { background: rgba(255,179,226,0.12); }
+
+        /* small swing movement so the string looks natural */
+        .string-lights .bulb {
+        animation: sway 6s ease-in-out infinite;
+        }
+        .string-lights .bulb:nth-child(odd) { animation-duration: 5.6s; }
+        .string-lights .bulb:nth-child(even) { animation-duration: 6.4s; }
+
+        @keyframes sway {
+        0% { transform: translateY(0) rotate(-2deg); }
+        50% { transform: translateY(2px) rotate(2deg); }
+        100% { transform: translateY(0) rotate(-2deg); }
+        }
+
+        /* twinkle keyframes */
+        @keyframes twinkle {
+        0% { opacity: 0; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 0; transform: scale(0.95); }
+        }
+
     </style>
 </head>
 <body>
@@ -170,6 +305,26 @@
     </div>
 </div>
 
+<!-- Christmas string lights -->
+<div class="string-lights" aria-hidden="true">
+  <!-- We'll create 14 bulbs — change number if you want -->
+  <div class="bulb" data-color="red"></div>
+  <div class="bulb" data-color="green"></div>
+  <div class="bulb" data-color="gold"></div>
+  <div class="bulb" data-color="cyan"></div>
+  <div class="bulb" data-color="pink"></div>
+  <div class="bulb" data-color="red"></div>
+  <div class="bulb" data-color="green"></div>
+  <div class="bulb" data-color="gold"></div>
+  <div class="bulb" data-color="cyan"></div>
+  <div class="bulb" data-color="pink"></div>
+  <div class="bulb" data-color="red"></div>
+  <div class="bulb" data-color="green"></div>
+  <div class="bulb" data-color="gold"></div>
+  <div class="bulb" data-color="cyan"></div>
+</div>
+
+
 <audio id="bg-music" loop>
     <!-- Add MP3 in static and uncomment this line if you want music -->
     <!-- <source src="{{ url_for('static', filename='music/christmas.mp3') }}" type="audio/mpeg"> -->
@@ -190,5 +345,51 @@
         }
     }
 </script>
+<script>
+    /* Twinkle logic for the string lights */
+    (function() {
+    try {
+        const bulbs = document.querySelectorAll(".string-lights .bulb");
+        bulbs.forEach((b, i) => {
+        // add glow element
+        const glow = document.createElement("span");
+        glow.className = "glow";
+        b.appendChild(glow);
+
+        // compute random twinkle intervals
+        const minDelay = 400;
+        const maxDelay = 4000;
+        const minDuration = 360;
+        const maxDuration = 1200;
+
+        function scheduleTwinkle() {
+            const delay = Math.random() * (maxDelay - minDelay) + minDelay;
+            setTimeout(() => {
+            const dur = Math.random() * (maxDuration - minDuration) + minDuration;
+            // randomize intensity color via opacity
+            glow.style.opacity = 0.0;
+            glow.style.animation = `twinkle ${dur}ms ease-in-out`;
+            glow.style.animationFillMode = "forwards";
+            // bump the opacity and slight scale via inline color tweak
+            glow.style.opacity = 1;
+            // clear animation after it ends so it can be re-applied
+            setTimeout(() => {
+                glow.style.animation = "";
+                glow.style.opacity = 0;
+                scheduleTwinkle();
+            }, dur + 60);
+            }, delay);
+        }
+
+        // small initial stagger
+        setTimeout(scheduleTwinkle, i * 120);
+        });
+    } catch (e) {
+        // fail silently — lights are decorative only
+        console.warn("Lights init failed", e);
+    }
+    })();
+</script>
+
 </body>
 </html>
