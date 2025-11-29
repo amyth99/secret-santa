@@ -1,32 +1,106 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Hi {{ name }} 🎄</h2>
+<h2 style="text-align:center; font-size:24px; margin-bottom:6px;">Hi {{ name }} 🎄</h2>
 
-<p style="text-align:center; font-size:15px; margin-top:8px;">
-    Your Christmas friend is:
+<p style="text-align:center; font-size:14px; margin-top:0; color:#cbd5f5;">
+    Your Secret Santa assignment is ready!
 </p>
 
-<h1 style="text-align:center; font-size:28px; margin:6px 0 16px;">
-    {{ receiver_name }}
-</h1>
+<div style="
+    margin-top:18px;
+    padding:18px 16px;
+    border-radius:16px;
+    background: radial-gradient(circle at top, #0f172a 0, #020617 55%);
+    border: 1px solid rgba(248, 250, 252, 0.08);
+    position: relative;
+    overflow:hidden;
+">
+    <div style="
+        position:absolute;
+        inset:0;
+        opacity:0.15;
+        background-image: radial-gradient(circle at 10% 20%, #f97316 0, transparent 50%),
+                          radial-gradient(circle at 90% 80%, #22c55e 0, transparent 50%);
+        pointer-events:none;
+    "></div>
 
-{% if receiver_note %}
-<div style="border-radius:12px; background:#020617; padding:12px 14px; font-size:13px;">
-    <strong>Their note / interests:</strong>
-    <p style="margin-top:6px; white-space:pre-wrap;">{{ receiver_note }}</p>
+    <div style="position:relative;">
+        <p style="text-align:center; font-size:15px; margin-bottom:8px;">
+            Your Christmas friend is:
+        </p>
+
+        <h1 style="
+            text-align:center;
+            font-size:28px;
+            margin:6px 0 14px;
+            letter-spacing:1px;
+        ">
+            🎁 <span style="font-weight:800; color:#facc15;">{{ receiver_name }}</span> 🎁
+        </h1>
+
+        {% if receiver_note %}
+            <div style="
+                border-radius:14px;
+                background: rgba(15,23,42,0.9);
+                padding:10px 12px;
+                font-size:13px;
+                border: 1px solid rgba(148,163,184,0.4);
+                margin-top:10px;
+            ">
+                <div style="font-weight:600; margin-bottom:4px; color:#e5e7eb;">
+                    Their greetings / note:
+                </div>
+                <p style="margin:0; white-space:pre-wrap; color:#cbd5e1;">
+                    {{ receiver_note }}
+                </p>
+            </div>
+            {% endif %}
+
+    </div>
 </div>
-{% else %}
-<p style="font-size:13px; text-align:center;">
-    They didn’t leave a note, so you’ll have to guess 😈
-</p>
-{% endif %}
 
-<p style="font-size:11px; text-align:center; margin-top:16px; color:#9ca3af;">
-    Your Secret ID: {{ secret_id }}<br>
-    Don’t tell anyone who you got 👀
+<p style="font-size:11px; text-align:center; margin-top:14px; color:#9ca3af;">
+    Your Secret ID: <span style="font-weight:600;">{{ secret_id }}</span><br>
+    Keep this safe and don’t tell anyone who you got 👀
 </p>
 
-<div style="text-align:center; margin-top:18px;">
+<div style="text-align:center; margin-top:16px;">
     <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to home</a>
 </div>
+
+<script>
+// Tiny confetti-ish effect (no dependencies)
+(function() {
+    const colors = ["#f97316", "#22c55e", "#e5e7eb", "#38bdf8"];
+    const num = 24;
+    for (let i = 0; i < num; i++) {
+        const span = document.createElement("span");
+        span.style.position = "fixed";
+        span.style.width = "4px";
+        span.style.height = "8px";
+        span.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        span.style.top = "-10px";
+        span.style.left = Math.random()*100 + "vw";
+        span.style.opacity = "0.9";
+        span.style.borderRadius = "2px";
+        span.style.zIndex = "50";
+        span.style.pointerEvents = "none";
+        span.style.transform = `rotate(${Math.random()*60-30}deg)`;
+        document.body.appendChild(span);
+
+        const duration = 2000 + Math.random()*1500;
+        const delay = Math.random()*400;
+        setTimeout(() => {
+            const start = performance.now();
+            function drop(ts) {
+                const t = (ts - start)/duration;
+                if (t >= 1) { span.remove(); return; }
+                span.style.transform = `translateY(${t*100}vh) rotate(${Math.random()*120-60}deg)`;
+                requestAnimationFrame(drop);
+            }
+            requestAnimationFrame(drop);
+        }, delay);
+    }
+})();
+</script>
 {% endblock %}
