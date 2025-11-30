@@ -151,7 +151,7 @@ def send_assignment_email(name, email, receiver_name, receiver_note, event_name,
         print(f"No email for {name}, skipping send.")
         return
 
-    subject = f"[{event_name}] Your Christmas Friend - 2025🎄"
+    subject = f"Your Christmas Friend - 2025🎄"
 
     html_body = f"""
     <p>Hi {name},</p>
