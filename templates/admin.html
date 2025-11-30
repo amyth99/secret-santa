@@ -44,7 +44,7 @@
     </div>
 </form>
 
-{% if assignments_generated %}
+<!--{% if assignments_generated %}
 <hr style="border-color:#4b5563; margin:16px 0;">
 <h3 style="font-size:15px;">Current assignments (for debugging)</h3>
 <ul style="font-size:13px;">
@@ -52,7 +52,7 @@
         <li>{{ giver }} → {{ receiver }}</li>
     {% endfor %}
 </ul>
-{% endif %}
+{% endif %}-->
 
 <form method="POST" action="{{ url_for('admin_reset') }}" style="margin-top:20px;">
     <input type="password" name="admin_password" placeholder="Admin password" required>

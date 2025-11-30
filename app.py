@@ -458,9 +458,9 @@ def admin():
     assignments_generated = row["cnt"] > 0
 
     # Current assignments (if any)
-    cur.execute("SELECT giver_name, receiver_name FROM assignments;")
-    assn_rows = cur.fetchall()
-    assignments = {r["giver_name"]: r["receiver_name"] for r in assn_rows}
+    #cur.execute("SELECT giver_name, receiver_name FROM assignments;")
+    #assn_rows = cur.fetchall()
+    #assignments = {r["giver_name"]: r["receiver_name"] for r in assn_rows}
 
     cur.close()
 
@@ -468,7 +468,7 @@ def admin():
         "admin.html",
         registered_names=registered_names,
         assignments_generated=assignments_generated,
-        assignments=assignments,
+        #assignments=assignments,
     )
 
 
