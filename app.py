@@ -468,7 +468,7 @@ def admin():
         "admin.html",
         registered_names=registered_names,
         assignments_generated=assignments_generated,
-        #assignments=assignments,
+        assignments={},
     )
 
 
