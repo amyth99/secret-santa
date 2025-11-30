@@ -151,7 +151,7 @@ def send_assignment_email(name, email, receiver_name, receiver_note, event_name,
         print(f"No email for {name}, skipping send.")
         return
 
-    subject = f"[{event_name}] Your Secret Santa Friend 🎄"
+    subject = f"[{event_name}] Your Christmas Friend - 2025🎄"
 
     html_body = f"""
     <p>Hi {name},</p>
@@ -171,6 +171,8 @@ def send_assignment_email(name, email, receiver_name, receiver_note, event_name,
     <p><strong>Your Secret ID</strong> (to view this again on the website): {secret_id}</p>
 
     <p>If anything looks wrong, just ping me on WhatsApp.</p>
+
+    <p><strong>Merry Christmas 🎅✨</strong><i> in advance.</i></p>
 
     <p>– Amith</p>
     """
